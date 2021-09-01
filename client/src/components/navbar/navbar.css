@@ -103,3 +103,6 @@
     object-fit: cover;
     cursor: pointer;
 }
+.nav-link{
+    text-decoration: none;
+}

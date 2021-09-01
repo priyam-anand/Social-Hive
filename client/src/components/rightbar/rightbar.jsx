@@ -38,8 +38,8 @@ const Rightbar = ({ profile }) => {
                         <span className="rightbar-info-value">Madrid</span>
                     </div>
                     <div className="rightbar-info-item">
-                        <span className="rightbar-info-key">Relationship:</span>
-                        <span className="rightbar-info-value">Single</span>
+                        <span className="rightbar-info-key">Contact:</span>
+                        <span className="rightbar-info-value">N/A</span>
                     </div>
                 </div>
                 <h4 className="rightbar-title">User friends</h4>
