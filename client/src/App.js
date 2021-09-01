@@ -1,11 +1,10 @@
 import React from 'react'
-import Navbar from './components/navbar/navbar'
-import Home from './pages/home/home'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Home from './pages/home/home';
 
 const App = () => {
   return (
     <>
-      <Navbar/>
       <Home/>
     </>
   )

@@ -6,51 +6,53 @@ import TimelineIcon from '@material-ui/icons/Timeline';
 
 const Navbar = () => {
     return (
-        <>
-            <div className="navbarContainer">
-                <div className="navbarLeft">
-                    <span className="logo">Not Facebook</span>
+            <div className="navbar-Container">
+                <div className="navbar-Left">
+                    <span className="logo">SocialMediaApp</span>
                 </div>
-                <div className="navbarCenter">
+                <div className="navbar-Center">
                     <div className="searchbar">
-                        <Search className="searchIcon" />
+                        <Search className="search-Icon" />
                         <input
                             placeholder="Search for friend, post or video"
                             className="searchInput"
                         />
                     </div>
                 </div>
-                <div className="navbarRight">
-                    <div className="navbarLinks">
-                        <div className="navbarLink">
+                <div className="navbar-Right">
+                    <div className="navbar-Links">
+                        <div className="navbar-Link">
                             <HomeIcon fontSize="small" />
-                            Homepage
+                            <span className="mx-1">
+                                Homepage
+                            </span>
                         </div>
-                        <div className="navbarLink">
+                        <div className="navbar-Link">
                             <TimelineIcon fontSize="small" />
-                            Timeline
+                            <span className="mx-2">
+                                Timeline
+                            </span>
                         </div>
                     </div>
-                    <div className="navbarIcons">
-                        <div className="navbarIconItem">
+                    <div className="navbar-Icons">
+                        <div className="navbar-Icon-Item">
                             <Person style={{ fontSize: 30 }} />
-                            <span className="navbarIconBadge">1</span>
+                            <span className="navbar-Icon-Badge">1</span>
                         </div>
-                        <div className="navbarIconItem">
+                        <div className="navbar-Icon-Item">
                             <Chat style={{ fontSize: 30 }} />
-                            <span className="navbarIconBadge">2</span>
+                            <span className="navbar-Icon-Badge">2</span>
                         </div>
-                        <div className="navbarIconItem">
+                        <div className="navbar-Icon-Item">
                             <Notifications style={{ fontSize: 30 }} />
-                            <span className="navbarIconBadge">1</span>
+                            <span className="navbar-Icon-Badge">1</span>
                         </div>
                     </div>
                     <div className="profile-picture">
-                        <img src="/assets/person/6.jpeg" alt="" className="navbarImg" />
+                        <img src="/assets/person/4.jpeg" alt="" className="navbarImg" />
                     </div>
                 </div>
             </div>
-        </>
     )
 }
 
