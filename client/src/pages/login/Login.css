@@ -1,0 +1,100 @@
+.login{
+    width: 100vw;
+    height: 100vh;
+    background-color: #e0e2e6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-wrapper{
+    width: 70%;
+    height: 70%;
+    display: flex;
+}
+
+.login-left{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-right{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-logo{
+    font-size: 50px;
+    font-weight: 800;
+    color: #1775ee;
+    margin-bottom: 10px;
+}
+
+.login-desc{
+    font-size: 25px;
+}
+
+.login-box{
+    height: 60vh;
+    width: 100%;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.login-inp{
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid grey;
+    font-size: 18px;
+    padding-left: 20px;
+}
+.login-inp:focus{
+    outline: none;
+}
+
+.login-btn{
+    width: 50%;
+    height: 50px;
+    margin: 0px auto;
+    border-radius: 10px;
+    border: none;
+    background-color: #1775ee;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.create-account{
+    width: 50%;
+    height: 50px;
+    margin: 0px auto;
+    border-radius: 10px;
+    border: none;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    background-color: green;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+.create-account:hover{
+    color: white;
+}
+
+.logo-img{
+    height: 15vh;
+    width: 8vw;
+    margin:0px auto;
+}
