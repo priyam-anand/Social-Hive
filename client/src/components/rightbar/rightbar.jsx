@@ -1,7 +1,7 @@
 import React from 'react'
 import "./rightbar.css";
 import { Users } from "../../dummyData";
-// import Online from "../online/Online";
+import Online from "../online/online";
 
 const Rightbar = ({ profile }) => {
     const HomeRightbar = () => {
@@ -15,11 +15,11 @@ const Rightbar = ({ profile }) => {
                 </div>
                 <img className="rightbarAd" src="assets/ad.png" alt="" />
                 <h4 className="rightbar-title">Online Friends</h4>
-                {/* <ul className="rightbarFriendList">
+                <ul className="rightbarFriendList">
                     {Users.map((u) => (
                         <Online key={u.id} user={u} />
                     ))}
-                </ul> */}
+                </ul>
             </>
         );
     };

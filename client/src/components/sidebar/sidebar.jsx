@@ -1,8 +1,8 @@
 import React from 'react'
 import "./sidebar.css";
-import {RssFeed,Chat,PlayCircleFilledOutlined,Group,Bookmark,HelpOutline,WorkOutline,Event,School,} from "@material-ui/icons";
+import { RssFeed, Chat, PlayCircleFilledOutlined, Group, Bookmark, HelpOutline, WorkOutline, Event, School, } from "@material-ui/icons";
 import { Users } from "../../dummyData";
-// import CloseFriend from "../closeFriend/CloseFriend";
+import CloseFriend from "../closeFriend/closeFriend";
 
 const Sidebar = () => {
     return (
@@ -48,11 +48,11 @@ const Sidebar = () => {
                 </ul>
                 <button className="sidebar-button">Show More</button>
                 <hr className="sidebar-hr" />
-                {/* <ul className="sidebar-friend-list">
+                <ul className="sidebar-friend-list">
                     {Users.map((u) => (
                         <CloseFriend key={u.id} user={u} />
                     ))}
-                </ul> */}
+                </ul>
             </div>
         </div>
     );
