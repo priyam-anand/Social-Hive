@@ -2,18 +2,21 @@ import React from 'react'
 import './profileArea.css';
 
 const ProfileArea = () => {
+
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
     return (
         <>
             <div className="profileRightTop">
                 <div className="profile-cover">
                     <img
                         className="profile-cover-img"
-                        src="assets/post/3.jpeg"
+                        src={PF+"post/3.jpeg"}
                         alt=""
                     />
                     <img
                         className="profile-user-img"
-                        src="assets/person/7.jpeg"
+                        src={PF+"person/7.jpeg"}
                         alt=""
                     />
                 </div>

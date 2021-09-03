@@ -1,18 +1,32 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import "./post.css";
 import { MoreVert } from "@material-ui/icons";
-import { Users } from "../../dummyData";
 import { useState } from "react";
-
+import axios from 'axios';
 
 const Post = ({ post }) => {
     const [like, setLike] = useState(post.like)
     const [isLiked, setIsLiked] = useState(false)
+    const [user,setUser] = useState({});
 
+    
+
+    useEffect(()=>{
+        
+        const getUser = async () => {
+        const user = await axios(`/users/${post.userId}`);
+        console.log(user);
+        setUser(user.data);
+        }
+
+        getUser();
+    },[])
     const likeHandler = () => {
         setLike(isLiked ? like - 1 : like + 1)
         setIsLiked(!isLiked)
     }
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
     return (
         <div className="post">
             <div className="postWrapper">
@@ -20,13 +34,13 @@ const Post = ({ post }) => {
                     <div className="postTopLeft">
                         <img
                             className="postProfileImg"
-                            src={Users.filter((u) => u.id === post?.userId)[0].profilePicture}
+                            src={PF+user.profilePicture}
                             alt=""
                         />
                         <span className="postUsername">
-                            {Users.filter((u) => u.id === post?.userId)[0].username}
+                            {user.name}
                         </span>
-                        <span className="postDate">{post.date}</span>
+                        <span className="postDate">{post.createdAt}</span>
                     </div>
                     <div className="postTopRight">
                         <MoreVert />
@@ -34,13 +48,12 @@ const Post = ({ post }) => {
                 </div>
                 <div className="postCenter">
                     <span className="postText">{post?.desc}</span>
-                    <img className="postImg" src={post.photo} alt="" />
+                    <img className="postImg" src={PF+post.photo} alt="" />
                 </div>
                 <div className="postBottom">
                     <div className="postBottomLeft">
-                        <img className="likeIcon" src="assets/like.png" onClick={likeHandler} alt="" />
-                        {/* <img className="likeIcon" src="assets/heart.png" onClick={likeHandler} alt="" /> */}
-                        <span className="postLikeCounter">{like} people like it</span>
+                        <img className="likeIcon" src={PF+"like.png"} onClick={likeHandler} alt="" />
+                        <span className="postLikeCounter">{post.likes.length} people like it</span>
                     </div>
                     <div className="postBottomRight">
                         <span className="postCommentText">{post.comment} comments</span>

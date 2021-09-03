@@ -69,10 +69,10 @@ router.put('/:id/like', async (req, res) => {
 })
 
 // get timeline
-router.get('/timeline', async (req,res)=>{
-    
+router.get('/timeline/:userId', async (req,res)=>{
+    console.log("got till here this means proxy is working")
     try{
-        const me = await User.findById(req.body.userId);
+        const me = await User.findById(req.params.userId);
         const userPosts = await Post.find({userId : me._id});
         const otherPosts = await Promise.all(
             me.following.map((friendId)=>{

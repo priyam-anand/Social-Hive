@@ -15,7 +15,7 @@ const App = () => {
         <Route exact path='/'>
           <Home/>
         </Route>
-        <Route path='/profile'>
+        <Route path='/profile/:username'>
           <Profile />
         </Route>
         <Route path='/login'>

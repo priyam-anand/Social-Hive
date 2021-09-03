@@ -4,6 +4,9 @@ import { Users } from "../../dummyData";
 import Online from "../online/online";
 
 const Rightbar = ({ profile }) => {
+
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
     const HomeRightbar = () => {
         return (
             <>
@@ -46,7 +49,7 @@ const Rightbar = ({ profile }) => {
                 <div className="rightbar-followings">
                     <div className="rightbar-following">
                         <img
-                            src="assets/person/1.jpeg"
+                            src={PF+"person/1.jpeg"}
                             alt=""
                             className="rightbar-following-img"
                         />
@@ -54,7 +57,7 @@ const Rightbar = ({ profile }) => {
                     </div>
                     <div className="rightbar-following">
                         <img
-                            src="assets/person/2.jpeg"
+                            src={PF+"person/2.jpeg"}
                             alt=""
                             className="rightbar-following-img"
                         />
@@ -62,7 +65,7 @@ const Rightbar = ({ profile }) => {
                     </div>
                     <div className="rightbar-following">
                         <img
-                            src="assets/person/3.jpeg"
+                            src={PF+"person/3.jpeg"}
                             alt=""
                             className="rightbar-following-img"
                         />
@@ -70,7 +73,7 @@ const Rightbar = ({ profile }) => {
                     </div>
                     <div className="rightbar-following">
                         <img
-                            src="assets/person/4.jpeg"
+                            src={PF+"person/4.jpeg"}
                             alt=""
                             className="rightbar-following-img"
                         />
@@ -78,7 +81,7 @@ const Rightbar = ({ profile }) => {
                     </div>
                     <div className="rightbar-following">
                         <img
-                            src="assets/person/5.jpeg"
+                            src={PF+"person/5.jpeg"}
                             alt=""
                             className="rightbar-following-img"
                         />
@@ -86,7 +89,7 @@ const Rightbar = ({ profile }) => {
                     </div>
                     <div className="rightbar-following">
                         <img
-                            src="assets/person/6.jpeg"
+                            src={PF+"person/6.jpeg"}
                             alt=""
                             className="rightbar-following-img"
                         />
