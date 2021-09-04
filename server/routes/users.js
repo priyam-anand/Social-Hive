@@ -43,17 +43,21 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
-// Get one user
-router.get('/:id', async (req, res) => {
-    try {
-        const user = await User.findOne({ _id: req.params.id });
+// Get one user using query, id or name
+router.get('/', async (req,res)=>{
+    const userId=req.query.userId;
+    const username=req.query.username;
+    try{
+        const user = userId ? await User.findOne({ _id: userId }) 
+        : await User.findOne({ name: username });
+
         if (!user) {
             return res.status(400).json({ message: "user not found" });
         }
         return res.status(200).json(user);
-    } catch (err) {
-        console.log(err);
-        res.status(400).json({ message: "user not found" });
+    }catch(err)
+    {
+        return res.status(403).json(err);
     }
 })
 

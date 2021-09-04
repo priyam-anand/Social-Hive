@@ -7,6 +7,13 @@ import Login from './pages/login/Login';
 import Register from './pages/register/register';
 
 const App = () => {
+
+  const profile = ({match})=>{
+    return(
+      <Profile username={match.params.username}/>
+    )
+  }
+
   return (
     <>
       
@@ -16,7 +23,7 @@ const App = () => {
           <Home/>
         </Route>
         <Route path='/profile/:username'>
-          <Profile />
+          {profile}
         </Route>
         <Route path='/login'>
           <Login/>

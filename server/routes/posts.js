@@ -70,7 +70,6 @@ router.put('/:id/like', async (req, res) => {
 
 // get timeline
 router.get('/timeline/:userId', async (req,res)=>{
-    console.log("got till here this means proxy is working")
     try{
         const me = await User.findById(req.params.userId);
         const userPosts = await Post.find({userId : me._id});
@@ -81,6 +80,18 @@ router.get('/timeline/:userId', async (req,res)=>{
         );
         res.status(200).json(userPosts.concat(...otherPosts));
     }catch(err){
+        return res.status(403).json(err);
+    }
+})
+
+// get users posts
+router.get('/profile/:username', async (req,res)=>{
+    try{
+        const me = await User.findOne({name:req.params.username});
+        const userPosts = await Post.find({userId : me._id});
+        res.status(200).json(userPosts);
+    }catch(err)
+    {
         return res.status(403).json(err);
     }
 })

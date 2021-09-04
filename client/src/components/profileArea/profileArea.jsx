@@ -1,28 +1,27 @@
 import React from 'react'
 import './profileArea.css';
 
-const ProfileArea = () => {
+const ProfileArea = ({user}) => {
 
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
-
     return (
         <>
             <div className="profileRightTop">
                 <div className="profile-cover">
                     <img
                         className="profile-cover-img"
-                        src={PF+"post/3.jpeg"}
+                        src={(user.coverPhoto===undefined)?(PF + 'person/noCover.png'):(PF + user.coverPhoto)}
                         alt=""
                     />
                     <img
                         className="profile-user-img"
-                        src={PF+"person/7.jpeg"}
+                        src={(user.profilePicture===undefined)?(PF + 'person/noAvatar.png'):(PF + user.profilePicture)}
                         alt=""
                     />
                 </div>
                 <div className="profile-info">
-                    <h4 className="profile-info-name">John Carter</h4>
-                    <span className="profile-info-desc">Hey !</span>
+                    <h4 className="profile-info-name">{user.name}</h4>
+                    <span className="profile-info-desc">{(user.desc===undefined)?`User has not added any description`:user.desc}</span>
                 </div>
             </div>
         </>

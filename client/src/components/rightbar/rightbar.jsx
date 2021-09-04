@@ -3,7 +3,7 @@ import "./rightbar.css";
 import { Users } from "../../dummyData";
 import Online from "../online/online";
 
-const Rightbar = ({ profile }) => {
+const Rightbar = ({ user }) => {
 
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
@@ -34,11 +34,11 @@ const Rightbar = ({ profile }) => {
                 <div className="rightbar-info">
                     <div className="rightbar-info-item">
                         <span className="rightbar-info-key">City:</span>
-                        <span className="rightbar-info-value">New York</span>
+                        <span className="rightbar-info-value">{(user.city===undefined)?`Not added by the user`:user.desc}</span>
                     </div>
                     <div className="rightbar-info-item">
                         <span className="rightbar-info-key">From:</span>
-                        <span className="rightbar-info-value">Madrid</span>
+                        <span className="rightbar-info-value">{(user.from===undefined)?`Not added by the user`:user.desc}</span>
                     </div>
                     <div className="rightbar-info-item">
                         <span className="rightbar-info-key">Contact:</span>
@@ -102,7 +102,7 @@ const Rightbar = ({ profile }) => {
     return (
         <div className="rightbar">
             <div className="rightbar-wrapper">
-                {profile ? <ProfileRightbar /> : <HomeRightbar />}
+                {user ? <ProfileRightbar /> : <HomeRightbar />}
             </div>
         </div>
     );
