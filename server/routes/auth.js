@@ -40,7 +40,7 @@ router.post('/login',async (req,res)=>{
         if(!isMatch)
             return res.status(400).json({Message:"Invalid Credentials"});
 
-        return res.status(200).json({Message:"Login Successful"});
+        return res.status(200).json(user);
 
     }catch(err)
     {

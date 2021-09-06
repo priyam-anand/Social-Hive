@@ -1,18 +1,22 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import "./navbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import HomeIcon from '@material-ui/icons/Home';
 import TimelineIcon from '@material-ui/icons/Timeline';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { userContext } from '../../App';
 
 
 const Navbar = () => {
+
+    const {state} = useContext(userContext);
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     return (
         <div className="navbar-Container">
             <div className="navbar-Left">
-                <NavLink to='/' className='nav-link'>
+                <Link to={'/'} className='nav-link'>
                     <span className="logo">SocialMediaApp</span>
-                </NavLink>
+                </Link>
             </div>
             <div className="navbar-Center">
                 <div className="searchbar">
@@ -53,9 +57,9 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className="profile-picture">
-                    <NavLink to='/profile'>
-                        <img src="/assets/person/4.jpeg" alt="" className="navbarImg" />
-                    </NavLink>
+                    <Link to={`/profile/${state.user.name}`}>
+                        <img src={(state.user.profilePicture===undefined)?(PF + 'person/noAvatar.png'):(PF + state.user.profilePicture)} alt="" className="navbarImg" />
+                    </Link>
 
                 </div>
             </div>

@@ -4,3 +4,11 @@
 .feed-wrapper{
     padding: 20px;
 }
+.post-msg{
+    font-size: 1.6rem;
+    font-weight: bolder;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1.5rem 0rem;
+}

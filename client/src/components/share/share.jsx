@@ -1,16 +1,20 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import "./share.css";
 import { PermMedia, Label, Room, EmojiEmotions } from "@material-ui/icons"
+import { userContext } from '../../App';
 
 const Share = () => {
+
+    const {state} = useContext(userContext);
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     return (
         <>
             <div className="share">
                 <div className="share-wrapper">
                     <div className="share-top">
-                        <img className="share-profile-picture" src="/assets/person/4.jpeg" alt="" />
+                        <img className="share-profile-picture" src={(state.user.profilePicture===undefined)?(PF + 'person/noAvatar.png'):(PF + state.user.profilePicture)} alt="" />
                         <input
-                            placeholder="What's in your mind (Your Name here)?"
+                            placeholder={`What's in your mind ${state.user.name}?`}
                             className="share-input"
                         />
                     </div>

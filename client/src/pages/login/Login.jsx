@@ -1,7 +1,31 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import './Login.css';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { userContext } from '../../App';
 
 const Login = () => {
+
+    const {state,dispatch} = useContext(userContext);
+
+    const [user,setUser] = useState({
+        email:"",
+        password:""
+    });
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        dispatch({type:"LOGIN_START"});
+        try{
+            const res =  await axios.post('auth/login',user);
+            console.log(res.data);
+            dispatch({type:"LOGIN_SUCCESS",payload:res.data})
+        }catch(err){
+            dispatch({type:"LOGIN_FAILED",payload:err});
+        }   
+    }
+    
     return (
         <div className="login">
             <div className="login-wrapper">
@@ -14,19 +38,19 @@ const Login = () => {
                     </span>
                 </div>
                 <div className="login-right">
-                    <div className="login-box">
+                    <form className="login-box" onSubmit={handleSubmit}>
                         <img
                             src="assets/logoImg.jpg"
                             alt=""
                             className="logo-img"
                         />
-                        <input type="email" placeholder="Email" className="login-inp" />
-                        <input type="password" placeholder="Password" className="login-inp" />
-                        <button className="login-btn">
-                            Log In
+                        <input type="email" placeholder="Email" required="required" className="login-inp" value={user.email} onChange={(e)=>setUser({...user,email:e.target.value})} />
+                        <input type="password" placeholder="Password" className="login-inp" required="required" value={user.password} onChange={(e)=>setUser({...user,password:e.target.value})}/>
+                        <button className="login-btn" type="submit" disabled={state.isLoading}>
+                            {state.isLoading?"Loading":"Log In"}
                         </button>
-                        <a href="" className="create-account">Create a new Account</a>
-                    </div>
+                        <Link to="/register" className="create-account">Create a new Account</Link>
+                    </form>
                 </div>
             </div>
         </div>

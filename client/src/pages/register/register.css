@@ -98,3 +98,8 @@
     width: 8vw;
     margin:0px auto;
 }
+
+.warning-span{
+    color: red;
+    font-size: small;
+}
