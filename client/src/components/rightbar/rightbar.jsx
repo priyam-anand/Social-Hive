@@ -1,11 +1,40 @@
-import React from 'react'
+import React,{useEffect,useState,useContext} from 'react'
 import "./rightbar.css";
-import { Users } from "../../dummyData";
 import Online from "../online/online";
+import axios from 'axios';
+import {Link } from 'react-router-dom';
+import { userContext } from '../../App';
 
-const Rightbar = ({ user }) => {
+const Rightbar = ({ user,isProfile }) => {
+
+    const [friends,setFriends] = useState([]);
+    const {state} = useContext(userContext);
+    const [isFollowing,setIsFollowing] = useState(true);
 
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+    useEffect(()=>{
+        setIsFollowing(state.user.following.includes(user._id))
+    },[state.user,user]); 
+
+    useEffect(()=>{
+        const getUserFriends = async () => {
+            try{
+                const res = await axios.get(`/users/friends/${user._id}`);
+                setFriends(res.data);
+            }catch(err){
+                console.log(err);
+            }
+        }
+        getUserFriends();
+    },[user]);
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        console.log("clicked");
+        
+        setIsFollowing(!isFollowing);
+    }
 
     const HomeRightbar = () => {
         return (
@@ -19,14 +48,14 @@ const Rightbar = ({ user }) => {
                 <img className="rightbarAd" src="assets/ad.png" alt="" />
                 <h4 className="rightbar-title">Online Friends</h4>
                 <ul className="rightbarFriendList">
-                    {Users.map((u) => (
-                        <Online key={u.id} user={u} />
+                    {friends.map((friend) => (
+                        <Online key={friend._id} user={friend} />
                     ))}
                 </ul>
             </>
         );
     };
-
+    
     const ProfileRightbar = () => {
         return (
             <>
@@ -45,56 +74,36 @@ const Rightbar = ({ user }) => {
                         <span className="rightbar-info-value">N/A</span>
                     </div>
                 </div>
+
+                <div className="follow-unfollow">
+                    {
+                        (state.user.name===user.name)
+                        ?(<span></span>)
+                        :(<button className='btn btn-primary 
+                            btn-lg follow-btn  my-4' onClick={handleClick}>
+                            {!isFollowing?"Follow":"Unfollow"}
+                            </button>)
+                    }
+                </div>
+
                 <h4 className="rightbar-title">User friends</h4>
+
                 <div className="rightbar-followings">
-                    <div className="rightbar-following">
-                        <img
-                            src={PF+"person/1.jpeg"}
-                            alt=""
-                            className="rightbar-following-img"
-                        />
-                        <span className="rightbar-followingName">John Carter</span>
-                    </div>
-                    <div className="rightbar-following">
-                        <img
-                            src={PF+"person/2.jpeg"}
-                            alt=""
-                            className="rightbar-following-img"
-                        />
-                        <span className="rightbar-followingName">John Carter</span>
-                    </div>
-                    <div className="rightbar-following">
-                        <img
-                            src={PF+"person/3.jpeg"}
-                            alt=""
-                            className="rightbar-following-img"
-                        />
-                        <span className="rightbar-followingName">John Carter</span>
-                    </div>
-                    <div className="rightbar-following">
-                        <img
-                            src={PF+"person/4.jpeg"}
-                            alt=""
-                            className="rightbar-following-img"
-                        />
-                        <span className="rightbar-followingName">John Carter</span>
-                    </div>
-                    <div className="rightbar-following">
-                        <img
-                            src={PF+"person/5.jpeg"}
-                            alt=""
-                            className="rightbar-following-img"
-                        />
-                        <span className="rightbar-followingName">John Carter</span>
-                    </div>
-                    <div className="rightbar-following">
-                        <img
-                            src={PF+"person/6.jpeg"}
-                            alt=""
-                            className="rightbar-following-img"
-                        />
-                        <span className="rightbar-followingName">John Carter</span>
-                    </div>
+                    {friends.map((friend)=>{
+                        return(
+                            <Link to={`/profile/${friend.name}`} className='rightbar-following-link'>
+                                <div className="rightbar-following" key={friend._id}>
+                                    <img
+                                        src={PF+friend.profilePicture}
+                                        alt=""
+                                        className="rightbar-following-img"
+                                    />
+                                    <span className="rightbar-following-name">{friend.name}</span>
+                                </div>
+                            </Link>
+                            
+                        )
+                    })}
                 </div>
             </>
         );
@@ -102,7 +111,7 @@ const Rightbar = ({ user }) => {
     return (
         <div className="rightbar">
             <div className="rightbar-wrapper">
-                {user ? <ProfileRightbar /> : <HomeRightbar />}
+                {isProfile ? <ProfileRightbar /> : <HomeRightbar />}
             </div>
         </div>
     );

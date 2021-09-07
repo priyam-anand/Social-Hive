@@ -81,3 +81,28 @@
     object-fit: cover;
     border-radius: 5px;
 }
+
+.rightbar-following-name {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.rightbar-following-link{
+    text-decoration: none;
+    color: black;
+    font-weight: 450;
+}
+
+.follow-unfollow{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.follow-btn{
+    font-size: large;
+    font-weight: 500;
+}

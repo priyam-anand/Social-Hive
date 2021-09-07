@@ -43,6 +43,23 @@ router.delete('/:id', async (req, res) => {
     }
 })
 
+// get friends of the current user
+router.get('/friends/:userId',async (req,res)=>{
+    try{
+        const user = await User.findById(req.params.userId);
+        const friends = await Promise.all(
+            user.following.map((friendId)=>{
+                return User.findById(friendId);
+            })
+        )
+        res.status(200).json(friends);
+    }catch(err)
+    {
+        res.status(403).json(err);
+    }
+    
+})
+
 // Get one user using query, id or name
 router.get('/', async (req,res)=>{
     const userId=req.query.userId;

@@ -30,7 +30,7 @@ const Profile = () => {
                     <ProfileArea user={user}/>
                     <div className="profile-right-bottom">
                         <Feed username={username}/>
-                        <Rightbar user={user} />
+                        <Rightbar user={user} isProfile={true} />
                     </div>
                 </div>
             </div>
