@@ -1,18 +1,23 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useContext } from 'react'
 import "./post.css";
 import { MoreVert } from "@material-ui/icons";
 import { useState } from "react";
 import axios from 'axios';
 import { format } from 'timeago.js';
 import { Link } from "react-router-dom"
-
+import { userContext } from '../../App';
 
 const Post = ({ post }) => {
+
     const [like, setLike] = useState(post.likes.length)
     const [isLiked, setIsLiked] = useState(false)
     const [user, setUser] = useState({});
 
+    const {state} = useContext(userContext);
 
+    useEffect(()=>{
+        setIsLiked(post.likes.includes(state.user._id));
+    },[state.user._id,post.likes])
 
     useEffect(() => {
 
@@ -22,10 +27,19 @@ const Post = ({ post }) => {
         }
         getUser();
     }, [post.userId])
-    const likeHandler = () => {
+
+    const likeHandler = async () => {
+        
+        try{
+            await axios.put(`/posts/${post._id}/like`,{userId:state.user._id});
+        }catch(err){
+            console.log(err);
+        }
+
         setLike(isLiked ? like - 1 : like + 1)
-        setIsLiked(!isLiked)
+        setIsLiked(!isLiked);
     }
+    
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
     return (
@@ -52,7 +66,7 @@ const Post = ({ post }) => {
                 </div>
                 <div className="postCenter">
                     <span className="postText">{post?.desc}</span>
-                    <img className="postImg" src={(post.photo===undefined)?(PF + 'person/noAvatar.png'):(PF + post.photo)} alt="" />
+                    <img className="postImg" src={(post.photo===undefined)?(PF + 'person/noCover.png'):(PF + post.photo)} alt="" />
                 </div>
                 <div className="postBottom">
                     <div className="postBottomLeft">
