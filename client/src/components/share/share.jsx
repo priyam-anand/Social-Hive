@@ -14,6 +14,8 @@ const Share = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if(desc.current.value.length === 0 && !file)
+            return
         const post = {
             desc : desc.current.value,
             userId : state.user._id,
@@ -33,13 +35,23 @@ const Share = () => {
             <div className="share">
                 <div className="share-wrapper">
                     <div className="share-top">
-                        <img className="share-profile-picture" src={(state.user.profilePicture===undefined)?(PF + 'person/noAvatar.png'):(PF + state.user.profilePicture)} alt="" />
+                        <img className="share-profile-picture" src={(state.user.profilePicture===undefined || state.user.profilePicture==="")?(PF + 'person/noAvatar.png'):(PF + state.user.profilePicture)} alt="" />
                         <input
                             placeholder={`What's in your mind ${state.user.name}?`}
                             className="share-input" ref={desc}
                         />
                     </div>
                     <hr className="share-hr" />
+
+                    {file && (
+                        <div className="share-img-container">
+                            <img src={URL.createObjectURL(file)} className='share-img' alt="" />
+                            <button className='btn btn-danger btn-sm share-cancel-btn' onClick={()=> setFile(null)}>
+                                Cancel
+                            </button>
+                        </div>
+                    )}
+
                     <form className="share-bottom" onSubmit={handleSubmit}>
                         <div className="share-options">
                             <label htmlFor='file' className="share-option">

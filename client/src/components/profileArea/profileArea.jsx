@@ -10,12 +10,12 @@ const ProfileArea = ({user}) => {
                 <div className="profile-cover">
                     <img
                         className="profile-cover-img"
-                        src={(user.coverPhoto===undefined)?(PF + 'person/noCover.png'):(PF + user.coverPhoto)}
+                        src={(user.coverPhoto===undefined || user.profilePicture==="")?(PF + 'person/noCover.png'):(PF + user.coverPhoto)}
                         alt=""
                     />
                     <img
                         className="profile-user-img"
-                        src={(user.profilePicture===undefined)?(PF + 'person/noAvatar.png'):(PF + user.profilePicture)}
+                        src={(user.profilePicture===undefined || user.profilePicture==="")?(PF + 'person/noAvatar.png'):(PF + user.profilePicture)}
                         alt=""
                     />
                 </div>

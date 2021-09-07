@@ -24,6 +24,22 @@ export const reducer = (state,action) => {
                 isLoading:false,
                 isError:action.payload
             }
+        case "FOLLOW":
+            return{
+                ...state,
+                user:{
+                    ...state.user,
+                    following:[...state.user.following,action.payload]
+                }
+            }
+        case "UNFOLLOW":
+            return{
+                ...state,
+                user:{
+                    ...state.user,
+                    following:state.user.following.filter(follow => follow!==action.payload)
+                }
+            }
         default:
             return state;
     }

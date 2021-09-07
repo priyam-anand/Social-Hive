@@ -58,7 +58,7 @@ const Navbar = () => {
                 </div>
                 <div className="profile-picture">
                     <Link to={`/profile/${state.user.name}`}>
-                        <img src={(state.user.profilePicture===undefined)?(PF + 'person/noAvatar.png'):(PF + state.user.profilePicture)} alt="" className="navbarImg" />
+                        <img src={(state.user.profilePicture===undefined || state.user.profilePicture==="")?(PF + 'person/noAvatar.png'):(PF + state.user.profilePicture)} alt="" className="navbarImg" />
                     </Link>
 
                 </div>

@@ -9,6 +9,8 @@ import { userContext } from '../../App';
 
 const Post = ({ post }) => {
 
+    console.log("post = "+ JSON.stringify(post));
+
     const [like, setLike] = useState(post.likes.length)
     const [isLiked, setIsLiked] = useState(false)
     const [user, setUser] = useState({});
@@ -50,7 +52,7 @@ const Post = ({ post }) => {
                         <Link to={`profile/${user.name}`}>
                             <img
                                 className="postProfileImg"
-                                src={(user.profilePicture===undefined)?(PF + 'person/noAvatar.png'):(PF + user.profilePicture)}
+                                src={(user.profilePicture===undefined || user.profilePicture==="")?(PF + 'person/noAvatar.png'):(PF + user.profilePicture)}
                                 alt=""
                             />
                         </Link>
@@ -66,7 +68,7 @@ const Post = ({ post }) => {
                 </div>
                 <div className="postCenter">
                     <span className="postText">{post?.desc}</span>
-                    <img className="postImg" src={(post.photo===undefined)?(PF + 'person/noCover.png'):(PF + post.photo)} alt="" />
+                    <img className="postImg" src={(post.photo===undefined || post.photo==="")?(PF + 'person/noCover.png'):(PF + post.photo)} alt="" />
                 </div>
                 <div className="postBottom">
                     <div className="postBottomLeft">

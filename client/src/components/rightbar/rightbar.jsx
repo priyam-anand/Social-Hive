@@ -1,38 +1,54 @@
-import React,{useEffect,useState,useContext} from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import "./rightbar.css";
 import Online from "../online/online";
 import axios from 'axios';
-import {Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { userContext } from '../../App';
 
-const Rightbar = ({ user,isProfile }) => {
+const Rightbar = ({ user, isProfile }) => {
 
-    const [friends,setFriends] = useState([]);
-    const {state} = useContext(userContext);
-    const [isFollowing,setIsFollowing] = useState(true);
+    const [friends, setFriends] = useState([]);
+    const { state,dispatch } = useContext(userContext);
+    const [isFollowing, setIsFollowing] = useState(true);
 
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
-    useEffect(()=>{
+    useEffect(() => {
         setIsFollowing(state.user.following.includes(user._id))
-    },[state.user,user]); 
+    }, [user, state.user]);
 
-    useEffect(()=>{
+    useEffect(() => {
         const getUserFriends = async () => {
-            try{
+            try {
                 const res = await axios.get(`/users/friends/${user._id}`);
                 setFriends(res.data);
-            }catch(err){
+            } catch (err) {
                 console.log(err);
             }
         }
         getUserFriends();
-    },[user]);
+    }, [user]);
 
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
         e.preventDefault();
-        console.log("clicked");
-        
+
+        // will make an unfollow request
+        try {
+            if (isFollowing) {
+                
+                const res = await axios.put(`/users/${user._id}/unfollow`, { userId: state.user._id });
+                console.log(res);
+                dispatch({type:"UNFOLLOW",payload:user._id})
+            } else {
+                
+                const userId = state.user._id;
+                const res = await axios.put(`/users/${user._id}/follow`, { userId });
+                console.log(res);
+                dispatch({type:"FOLLOW",payload:user._id})
+            }
+        } catch (err) {
+            console.log(err);
+        } 
         setIsFollowing(!isFollowing);
     }
 
@@ -48,14 +64,17 @@ const Rightbar = ({ user,isProfile }) => {
                 <img className="rightbarAd" src="assets/ad.png" alt="" />
                 <h4 className="rightbar-title">Online Friends</h4>
                 <ul className="rightbarFriendList">
-                    {friends.map((friend) => (
-                        <Online key={friend._id} user={friend} />
-                    ))}
+                    {friends.map((friend) => {
+                        return (
+                            <Online key={friend._id} user={friend} />
+                        )
+                    })
+                    }
                 </ul>
             </>
         );
     };
-    
+
     const ProfileRightbar = () => {
         return (
             <>
@@ -63,11 +82,11 @@ const Rightbar = ({ user,isProfile }) => {
                 <div className="rightbar-info">
                     <div className="rightbar-info-item">
                         <span className="rightbar-info-key">City:</span>
-                        <span className="rightbar-info-value">{(user.city===undefined)?`Not added by the user`:user.desc}</span>
+                        <span className="rightbar-info-value">{(user.city === undefined) ? `Not added by the user` : user.desc}</span>
                     </div>
                     <div className="rightbar-info-item">
                         <span className="rightbar-info-key">From:</span>
-                        <span className="rightbar-info-value">{(user.from===undefined)?`Not added by the user`:user.desc}</span>
+                        <span className="rightbar-info-value">{(user.from === undefined) ? `Not added by the user` : user.desc}</span>
                     </div>
                     <div className="rightbar-info-item">
                         <span className="rightbar-info-key">Contact:</span>
@@ -77,11 +96,11 @@ const Rightbar = ({ user,isProfile }) => {
 
                 <div className="follow-unfollow">
                     {
-                        (state.user.name===user.name)
-                        ?(<span></span>)
-                        :(<button className='btn btn-primary 
+                        (state.user.name === user.name)
+                            ? (<span></span>)
+                            : (<button className='btn btn-primary 
                             btn-lg follow-btn  my-4' onClick={handleClick}>
-                            {!isFollowing?"Follow":"Unfollow"}
+                                {!isFollowing ? "Follow" : "Unfollow"}
                             </button>)
                     }
                 </div>
@@ -89,19 +108,19 @@ const Rightbar = ({ user,isProfile }) => {
                 <h4 className="rightbar-title">User friends</h4>
 
                 <div className="rightbar-followings">
-                    {friends.map((friend)=>{
-                        return(
+                    {friends.map((friend) => {
+                        return (
                             <Link to={`/profile/${friend.name}`} className='rightbar-following-link'>
                                 <div className="rightbar-following" key={friend._id}>
                                     <img
-                                        src={PF+friend.profilePicture}
+                                        src={(friend.profilePicture === undefined || friend.profilePicture === "") ? (PF + 'person/noAvatar.png') : (PF + friend.profilePicture)}
                                         alt=""
                                         className="rightbar-following-img"
                                     />
                                     <span className="rightbar-following-name">{friend.name}</span>
                                 </div>
                             </Link>
-                            
+
                         )
                     })}
                 </div>
