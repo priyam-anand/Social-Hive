@@ -1,15 +1,23 @@
 const router = require('express').Router();
 const Post = require('../Models/Post');
 const User = require('../Models/user');
+const {cloudinary} = require('../cloudinary');
 
 // create post
 router.post('/', async (req, res) => {
-    const post = new Post(req.body)
+    var data=req.body;
+
+    const {photo} = req.body;
     try {
+        const updres = await cloudinary.uploader.upload(photo,{upload_preset:'socialMedia-setup'});
+        data={...data,photo:updres.public_id};
+        console.log(data);
+        const post = new Post(data);
         const saved = await post.save();
         res.status(200).json(saved);
     } catch (err) {
-        return res.status(403).json(err);
+        console.log(err)
+        return res.status(500).json(err);
     }
 })
 

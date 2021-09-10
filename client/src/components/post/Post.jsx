@@ -1,4 +1,4 @@
-import React, { useEffect,useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 import "./post.css";
 import { MoreVert } from "@material-ui/icons";
 import { useState } from "react";
@@ -6,20 +6,19 @@ import axios from 'axios';
 import { format } from 'timeago.js';
 import { Link } from "react-router-dom"
 import { userContext } from '../../App';
+import { Image } from 'cloudinary-react';
 
 const Post = ({ post }) => {
-
-    console.log("post = "+ JSON.stringify(post));
 
     const [like, setLike] = useState(post.likes.length)
     const [isLiked, setIsLiked] = useState(false)
     const [user, setUser] = useState({});
 
-    const {state} = useContext(userContext);
+    const { state } = useContext(userContext);
 
-    useEffect(()=>{
+    useEffect(() => {
         setIsLiked(post.likes.includes(state.user._id));
-    },[state.user._id,post.likes])
+    }, [state.user._id, post.likes])
 
     useEffect(() => {
 
@@ -31,17 +30,17 @@ const Post = ({ post }) => {
     }, [post.userId])
 
     const likeHandler = async () => {
-        
-        try{
-            await axios.put(`/posts/${post._id}/like`,{userId:state.user._id});
-        }catch(err){
+
+        try {
+            await axios.put(`/posts/${post._id}/like`, { userId: state.user._id });
+        } catch (err) {
             console.log(err);
         }
 
         setLike(isLiked ? like - 1 : like + 1)
         setIsLiked(!isLiked);
     }
-    
+
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
     return (
@@ -52,7 +51,7 @@ const Post = ({ post }) => {
                         <Link to={`profile/${user.name}`}>
                             <img
                                 className="postProfileImg"
-                                src={(user.profilePicture===undefined || user.profilePicture==="")?(PF + 'person/noAvatar.png'):(PF + user.profilePicture)}
+                                src={(user.profilePicture === undefined || user.profilePicture === "") ? (PF + 'person/noAvatar.png') : (PF + user.profilePicture)}
                                 alt=""
                             />
                         </Link>
@@ -68,7 +67,19 @@ const Post = ({ post }) => {
                 </div>
                 <div className="postCenter">
                     <span className="postText">{post?.desc}</span>
-                    <img className="postImg" src={(post.photo===undefined || post.photo==="")?(PF + 'person/noCover.png'):(PF + post.photo)} alt="" />
+                    {(post.photo !== undefined && post.photo.length > 15)
+                        ? <Image cloudName="dd8mlpgig" publicId={post.photo} style={{
+                            'margin-top': '20px',
+                            'width': '100%',
+                            'max-height': '500px',
+                            'object-fit': 'contain'
+                    }}/>
+                    :(
+                    <img className="postImg" src={(post.photo === undefined || post.photo === "")
+                        ? (PF + 'person/noCover.png')
+                        : (PF + post.photo)} alt="" />
+                    )}
+
                 </div>
                 <div className="postBottom">
                     <div className="postBottomLeft">

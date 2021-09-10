@@ -8,6 +8,7 @@ import { useHistory } from 'react-router';
 const Share = () => {
 
     const [file,setFile]=useState(null);
+    const [imgBase64,setImgBase64]=useState();
     const {state} = useContext(userContext);
     const desc = useRef();
     const history = useHistory();
@@ -16,9 +17,11 @@ const Share = () => {
         e.preventDefault();
         if(desc.current.value.length === 0 && !file)
             return
+
         const post = {
             desc : desc.current.value,
             userId : state.user._id,
+            photo : imgBase64,
             likes : [],
         }
         try{
@@ -26,6 +29,20 @@ const Share = () => {
             history.push('/login');
         }catch(err){
             console.log(err)
+        }
+    }
+
+    const handleInp = (e) => {
+        setFile(e.target.files[0]);
+        const fil = e.target.files[0];
+        getBase64Img(fil);
+    }
+
+    const getBase64Img = (fil) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(fil);
+        reader.onloadend = () => {
+            setImgBase64(reader.result)
         }
     }
 
@@ -45,7 +62,7 @@ const Share = () => {
 
                     {file && (
                         <div className="share-img-container">
-                            <img src={URL.createObjectURL(file)} className='share-img' alt="" />
+                            <img src={imgBase64} className='share-img' alt="" />
                             <button className='btn btn-danger btn-sm share-cancel-btn' onClick={()=> setFile(null)}>
                                 Cancel
                             </button>
@@ -57,7 +74,7 @@ const Share = () => {
                             <label htmlFor='file' className="share-option">
                                 <PermMedia htmlColor="tomato" className="share-icon" />
                                 <span className="share-option-text">Photo or Video</span>
-                                <input type='file' style={{display:"none"}} id='file' accept='.png,.jpeg,jpg' onChange={(e)=>setFile(e.target.files[0])}/>
+                                <input type='file' style={{display:"none"}} id='file' accept='.png,.jpeg,jpg' onChange={handleInp}/>
                             </label>
                             <div className="share-option">
                                 <Label htmlColor="blue" className="share-icon" />
