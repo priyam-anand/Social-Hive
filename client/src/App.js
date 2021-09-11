@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react'
+import React, { createContext, useReducer, useEffect } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Home from './pages/home/home';
 import { Route, Switch, Redirect } from 'react-router-dom';
@@ -7,11 +7,32 @@ import Login from './pages/login/Login';
 import Register from './pages/register/register';
 import { reducer,initialState } from './Reducer/useReducer';
 
-
 export const userContext = createContext();
 
 const App = () => {
   const [state,dispatch]=useReducer(reducer,initialState);
+
+  const getInitialData = async () =>{
+    try{
+      const resp = await fetch('/auth/initialData', {
+        method: "GET",
+        credentials: 'include',
+        headers: {
+          Accept: "Application/json",
+          "Content-Type": "Application/json",
+        }
+      })
+      const data=await resp.json();
+      console.log(data);
+      dispatch({type:"INITAL_DATA",payload:data})
+    }catch(err){
+      console.log(err);
+    }
+    
+  }
+  useEffect(()=>{
+    getInitialData();
+  },[]);
 
   const isUser = () => {
     if(state.user!==null)

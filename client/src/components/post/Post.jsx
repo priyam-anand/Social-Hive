@@ -69,10 +69,10 @@ const Post = ({ post }) => {
                     <span className="postText">{post?.desc}</span>
                     {(post.photo !== undefined && post.photo.length > 15)
                         ? <Image cloudName="dd8mlpgig" publicId={post.photo} style={{
-                            'margin-top': '20px',
+                            'marginTop': '20px',
                             'width': '100%',
-                            'max-height': '500px',
-                            'object-fit': 'contain'
+                            'maxHeight': '500px',
+                            'objectFit': 'contain'
                     }}/>
                     :(
                     <img className="postImg" src={(post.photo === undefined || post.photo === "")

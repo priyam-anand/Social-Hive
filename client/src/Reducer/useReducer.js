@@ -12,6 +12,12 @@ export const reducer = (state,action) => {
                 isLoading:true,
                 isError:false
             };
+        case "INITAL_DATA":
+            return{
+                user:action.payload,
+                isLoading:false,
+                isError:false
+            }
         case "LOGIN_SUCCESS":
             return{
                 user:action.payload,
