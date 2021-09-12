@@ -9,7 +9,6 @@ import { userContext } from '../../App';
 const Home = () => {
 
     const {state} = useContext(userContext);
-    console.log(state.user);
     return (
         <>
             <Navbar/>

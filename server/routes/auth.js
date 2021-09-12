@@ -58,15 +58,15 @@ router.post('/login',async (req,res)=>{
 // get data if jwt is present
 router.get('/initialData' ,async (req,res)=>{
     const token = req.cookies.JWT;
-    const verify = jwt.verify(token, process.env.SECRET_KEY);
+    console.log(token);
     try{
-        
+        const verify = jwt.verify(token, process.env.SECRET_KEY);
         const rootUser = await User.findOne({ _id: verify._id, "tokens.token": token });
         if(!rootUser)
             throw new Error("no user");
         res.status(200).json(rootUser);
     }catch(err){
-        return res.status(500).json(err);
+        return res.status(400).json(err);
     }
 })
 
