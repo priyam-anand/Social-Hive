@@ -2,6 +2,7 @@ const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const User = require('../Models/user');
 const jwt = require('jsonwebtoken');
+
 // Register
 router.post('/register',async (req,res)=>{
     try{
@@ -54,18 +55,25 @@ router.post('/login',async (req,res)=>{
     }
 })
 
+// get data if jwt is present
 router.get('/initialData' ,async (req,res)=>{
     const token = req.cookies.JWT;
     const verify = jwt.verify(token, process.env.SECRET_KEY);
     try{
+        
         const rootUser = await User.findOne({ _id: verify._id, "tokens.token": token });
         if(!rootUser)
             throw new Error("no user");
-        // console.log(rootUser);
         res.status(200).json(rootUser);
     }catch(err){
         return res.status(500).json(err);
     }
+})
+
+// delete token from the brower cookies
+router.get('/logout',(req,res)=>{
+    res.clearCookie("JWT" , {path:'/'});
+    res.status(200).json({message:"logged out"});
 })
 
 module.exports = router;

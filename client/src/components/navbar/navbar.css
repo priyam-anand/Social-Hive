@@ -106,3 +106,47 @@
 .nav-link{
     text-decoration: none;
 }
+
+.profile-picture{
+    padding: 0.9rem 0.9rem;
+}
+
+.profile-picture:hover .navbarImg{
+    width: 50px;
+    height: 50px;
+    transition: 0.2s;
+}
+
+.drop-menu{
+    position: fixed;
+    top: 9vh;
+    right: 10px;
+    background-color: rgb(248, 247, 247);
+    width: 10vw;
+    border-radius: 10px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+
+    display: none;
+}
+.drop-item{
+    text-decoration:none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    padding: 5px 20px;
+    text-align: center;
+}
+
+.drop-item:hover{
+    background-color: rgb(224, 224, 224);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.drop-menu:hover{
+    display: inline-block;
+}
+.profile-picture:hover .drop-menu{
+    display: inline-block;
+}

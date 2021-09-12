@@ -8,7 +8,7 @@ import { userContext } from '../../App';
 const Rightbar = ({ user, isProfile }) => {
 
     const [friends, setFriends] = useState([]);
-    const { state,dispatch } = useContext(userContext);
+    const { state, dispatch } = useContext(userContext);
     const [isFollowing, setIsFollowing] = useState(true);
 
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -35,20 +35,20 @@ const Rightbar = ({ user, isProfile }) => {
         // will make an unfollow request
         try {
             if (isFollowing) {
-                
+
                 const res = await axios.put(`/users/${user._id}/unfollow`, { userId: state.user._id });
                 console.log(res);
-                dispatch({type:"UNFOLLOW",payload:user._id})
+                dispatch({ type: "UNFOLLOW", payload: user._id })
             } else {
-                
+
                 const userId = state.user._id;
                 const res = await axios.put(`/users/${user._id}/follow`, { userId });
                 console.log(res);
-                dispatch({type:"FOLLOW",payload:user._id})
+                dispatch({ type: "FOLLOW", payload: user._id })
             }
         } catch (err) {
             console.log(err);
-        } 
+        }
         setIsFollowing(!isFollowing);
     }
 
@@ -110,17 +110,18 @@ const Rightbar = ({ user, isProfile }) => {
                 <div className="rightbar-followings">
                     {friends.map((friend) => {
                         return (
-                            <Link to={`/profile/${friend.name}`} className='rightbar-following-link'>
-                                <div className="rightbar-following" key={friend._id}>
+                            <div className="rightbar-following" key={friend._id}>
+                                <Link to={`/profile/${friend.name}`} className='rightbar-following-link'>
+
                                     <img
                                         src={(friend.profilePicture === undefined || friend.profilePicture === "") ? (PF + 'person/noAvatar.png') : (PF + friend.profilePicture)}
                                         alt=""
                                         className="rightbar-following-img"
                                     />
                                     <span className="rightbar-following-name">{friend.name}</span>
-                                </div>
-                            </Link>
 
+                                </Link>
+                            </div>
                         )
                     })}
                 </div>
