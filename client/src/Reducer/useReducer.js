@@ -18,6 +18,12 @@ export const reducer = (state, action) => {
                 isLoading: false,
                 isError: false
             }
+        case "USER_UPDATE":
+            return{
+                user:action.payload,
+                isLoading:false,
+                isError:false
+            }
         case "LOGOUT":
             return {
                 user: null,

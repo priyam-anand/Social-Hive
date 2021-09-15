@@ -32,7 +32,6 @@ const Rightbar = ({ user, isProfile }) => {
     const handleClick = async (e) => {
         e.preventDefault();
 
-        // will make an unfollow request
         try {
             if (isFollowing) {
 
@@ -80,16 +79,20 @@ const Rightbar = ({ user, isProfile }) => {
                 <h4 className="rightbar-title">User information</h4>
                 <div className="rightbar-info">
                     <div className="rightbar-info-item">
-                        <span className="rightbar-info-key">City:</span>
-                        <span className="rightbar-info-value">{(user.city === undefined) ? `Not added by the user` : user.desc}</span>
+                        <span className="rightbar-info-key">Name:</span>
+                        <span className="rightbar-info-value">{(user.name === undefined) ? `Not added by the user` : user.name}</span>
+                    </div>
+                    <div className="rightbar-info-item">
+                        <span className="rightbar-info-key">Email:</span>
+                        <span className="rightbar-info-value">{(user.email === undefined) ? `Not added by the user` : user.email}</span>
                     </div>
                     <div className="rightbar-info-item">
                         <span className="rightbar-info-key">From:</span>
-                        <span className="rightbar-info-value">{(user.from === undefined) ? `Not added by the user` : user.desc}</span>
+                        <span className="rightbar-info-value">{(user.from === undefined) ? `N/A` : user.from}</span>
                     </div>
                     <div className="rightbar-info-item">
-                        <span className="rightbar-info-key">Contact:</span>
-                        <span className="rightbar-info-value">N/A</span>
+                        <span className="rightbar-info-key">Phone No:</span>
+                        <span className="rightbar-info-value">{(user.phone === undefined) ? `N/A` : user.phone}</span>
                     </div>
                 </div>
 
