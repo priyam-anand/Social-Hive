@@ -49,11 +49,19 @@ const Post = ({ post }) => {
                 <div className="postTop">
                     <div className="postTopLeft">
                         <Link to={`profile/${user.name}`}>
-                            <img
-                                className="postProfileImg"
-                                src={(user.profilePicture === undefined || user.profilePicture === "") ? (PF + 'person/noAvatar.png') : (PF + user.profilePicture)}
-                                alt=""
-                            />
+                            {
+                                (user.profilePicture === undefined || user.profilePicture === "")
+                                    ? <img
+                                        className="postProfileImg"
+                                        src={PF + 'person/noAvatar.png'}
+                                        alt="" />
+                                    : <Image cloudName="dd8mlpgig" publicId={user.profilePicture} style={{
+                                        'width': '32px',
+                                        'height': '32px',
+                                        'border-radius': '50%',
+                                        'object-fit': 'cover'
+                                    }} />
+                            }
                         </Link>
                         <span className="postUsername">
                             {user.name}
@@ -73,12 +81,12 @@ const Post = ({ post }) => {
                             'width': '100%',
                             'maxHeight': '500px',
                             'objectFit': 'contain'
-                    }}/>
-                    :(
-                    <img className="postImg" src={(post.photo === undefined || post.photo === "")
-                        ? (PF + 'person/noCover.png')
-                        : (PF + post.photo)} alt="" />
-                    )}
+                        }} />
+                        : (
+                            <img className="postImg" src={(post.photo === undefined || post.photo === "")
+                                ? (PF + 'person/noCover.png')
+                                : (PF + post.photo)} alt="" />
+                        )}
 
                 </div>
                 <div className="postBottom">

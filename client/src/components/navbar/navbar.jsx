@@ -5,22 +5,22 @@ import HomeIcon from '@material-ui/icons/Home';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import { Link } from 'react-router-dom';
 import { userContext } from '../../App';
-import {useHistory} from 'react-router'
+import { useHistory } from 'react-router'
 import axios from 'axios';
-
+import { Image } from 'cloudinary-react';
 
 const Navbar = () => {
 
-    const { state,dispatch } = useContext(userContext);
+    const { state, dispatch } = useContext(userContext);
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     const history = useHistory();
 
     const logout = async () => {
-        try{
+        try {
             await axios.get('/auth/logout');
-            dispatch({type:"LOGOUT"});
+            dispatch({ type: "LOGOUT" });
             history.push('/');
-        }catch(err){
+        } catch (err) {
             console.log(err);
         }
     }
@@ -71,7 +71,16 @@ const Navbar = () => {
                     </div>
                 </div>
                 <div className="profile-picture">
-                    <img src={(state.user.profilePicture === undefined || state.user.profilePicture === "") ? (PF + 'person/noAvatar.png') : (PF + state.user.profilePicture)} alt="" className="navbarImg" />
+                    {(state.user.profilePicture === undefined || state.user.profilePicture === "")
+                        ? <img className="navbarImg" src={PF + 'person/noAvatar.png'} alt="" />
+                        : <Image cloudName="dd8mlpgig" publicId={state.user.profilePicture} style={{
+                            'width': '40px',
+                            'height': '40px',
+                            'border-radius': '50%',
+                            'object-fit': 'cover',
+                            'cursor': 'pointer'
+                        }} />
+                    }
                     <div className="drop-menu">
                         <Link to={`/profile/${state.user.name}`} className="drop-item">
                             View Profile

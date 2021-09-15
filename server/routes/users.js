@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const User = require('../Models/user');
 const bcrypt = require('bcrypt');
+const { cloudinary } = require('../cloudinary');
 
 // Update User
 router.put('/:id', async (req, res) => {
-    console.log(req.body);
     if (req.body.userId === req.params.id || req.body.isAdmin) {
         if (req.body.password) {
             try {
@@ -15,8 +15,21 @@ router.put('/:id', async (req, res) => {
             }
         }
         try {
+            var data=req.body;
+            if (req.body.profilePicture) {
+                const {profilePicture} = req.body;
+                const updres = await cloudinary.uploader.upload(profilePicture,{upload_preset:'socialMedia-setup'});
+                data={...data,profilePicture:updres.public_id};
+            }
+
+            if(req.body.coverPicture){
+                const {coverPicture} = req.body;
+                const updres = await cloudinary.uploader.upload(coverPicture,{upload_preset:'socialMedia-setup'});
+                data={...data,coverPicture:updres.public_id};
+            }
+
             const user = await User.findByIdAndUpdate(req.params.id, {
-                $set: req.body,
+                $set: data
             });
             res.status(200).json({ message: "account has been updated" })
         } catch {
@@ -45,36 +58,34 @@ router.delete('/:id', async (req, res) => {
 })
 
 // get friends of the current user
-router.get('/friends/:userId',async (req,res)=>{
-    try{
+router.get('/friends/:userId', async (req, res) => {
+    try {
         const user = await User.findById(req.params.userId);
         const friends = await Promise.all(
-            user.following.map((friendId)=>{
+            user.following.map((friendId) => {
                 return User.findById(friendId);
             })
         )
         res.status(200).json(friends);
-    }catch(err)
-    {
+    } catch (err) {
         res.status(403).json(err);
     }
-    
+
 })
 
 // Get one user using query, id or name
-router.get('/', async (req,res)=>{
-    const userId=req.query.userId;
-    const username=req.query.username;
-    try{
-        const user = userId ? await User.findOne({ _id: userId }) 
-        : await User.findOne({ name: username });
+router.get('/', async (req, res) => {
+    const userId = req.query.userId;
+    const username = req.query.username;
+    try {
+        const user = userId ? await User.findOne({ _id: userId })
+            : await User.findOne({ name: username });
 
         if (!user) {
             return res.status(400).json({ message: "user not found" });
         }
         return res.status(200).json(user);
-    }catch(err)
-    {
+    } catch (err) {
         return res.status(403).json(err);
     }
 })

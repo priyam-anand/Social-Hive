@@ -1,33 +1,34 @@
-import React,{useContext, useRef, useState} from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import "./share.css";
 import { PermMedia, Label, Room, EmojiEmotions } from "@material-ui/icons"
 import { userContext } from '../../App';
 import axios from 'axios';
 import { useHistory } from 'react-router';
+import { Image } from 'cloudinary-react';
 
 const Share = () => {
 
-    const [file,setFile]=useState(null);
-    const [imgBase64,setImgBase64]=useState();
-    const {state} = useContext(userContext);
+    const [file, setFile] = useState(null);
+    const [imgBase64, setImgBase64] = useState();
+    const { state } = useContext(userContext);
     const desc = useRef();
     const history = useHistory();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(desc.current.value.length === 0 && !file)
+        if (desc.current.value.length === 0 && !file)
             return
 
         const post = {
-            desc : desc.current.value,
-            userId : state.user._id,
-            photo : imgBase64,
-            likes : [],
+            desc: desc.current.value,
+            userId: state.user._id,
+            photo: imgBase64,
+            likes: [],
         }
-        try{
-            await axios.post('posts/',post);
+        try {
+            await axios.post('posts/', post);
             history.push('/login');
-        }catch(err){
+        } catch (err) {
             console.log(err)
         }
     }
@@ -52,7 +53,17 @@ const Share = () => {
             <div className="share">
                 <div className="share-wrapper">
                     <div className="share-top">
-                        <img className="share-profile-picture" src={(state.user.profilePicture===undefined || state.user.profilePicture==="")?(PF + 'person/noAvatar.png'):(PF + state.user.profilePicture)} alt="" />
+                        {(state.user.profilePicture === undefined || state.user.profilePicture === "")
+                            ? <img className="share-profile-picture" src={PF + 'person/noAvatar.png'} alt="" />
+                            : <Image cloudName="dd8mlpgig" publicId={state.user.profilePicture} style={{
+                                'width': '50px',
+                                'height': '50px',
+                                'border-radius': '50%',
+                                'object-fit': 'cover',
+                                'margin-right': '10px'
+                            }} />
+                        }
+
                         <input
                             placeholder={`What's in your mind ${state.user.name}?`}
                             className="share-input" ref={desc}
@@ -63,7 +74,7 @@ const Share = () => {
                     {file && (
                         <div className="share-img-container">
                             <img src={imgBase64} className='share-img' alt="" />
-                            <button className='btn btn-danger btn-sm share-cancel-btn' onClick={()=> setFile(null)}>
+                            <button className='btn btn-danger btn-sm share-cancel-btn' onClick={() => setFile(null)}>
                                 Cancel
                             </button>
                         </div>
@@ -74,7 +85,7 @@ const Share = () => {
                             <label htmlFor='file' className="share-option">
                                 <PermMedia htmlColor="tomato" className="share-icon" />
                                 <span className="share-option-text">Photo or Video</span>
-                                <input type='file' style={{display:"none"}} id='file' accept='.png,.jpeg,jpg' onChange={handleInp}/>
+                                <input type='file' style={{ display: "none" }} id='file' accept='.png,.jpeg,jpg' onChange={handleInp} />
                             </label>
                             <div className="share-option">
                                 <Label htmlColor="blue" className="share-icon" />

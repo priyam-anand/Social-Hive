@@ -11,7 +11,6 @@ router.post('/', async (req, res) => {
     try {
         const updres = await cloudinary.uploader.upload(photo,{upload_preset:'socialMedia-setup'});
         data={...data,photo:updres.public_id};
-        // console.log(data);
         const post = new Post(data);
         const saved = await post.save();
         res.status(200).json(saved);

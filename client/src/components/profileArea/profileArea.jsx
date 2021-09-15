@@ -1,14 +1,15 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import './profileArea.css';
 import { userContext } from '../../App';
 import { useContext } from 'react';
 import { Button, Modal } from 'react-bootstrap'
 import axios from 'axios';
+import { Image } from 'cloudinary-react';
 
 
 const ProfileArea = ({ user }) => {
 
-    const { state,dispatch } = useContext(userContext);
+    const { state, dispatch } = useContext(userContext);
 
     const [show, setShow] = useState(false);
     const [edit, setEdit] = useState(state.user);
@@ -53,24 +54,24 @@ const ProfileArea = ({ user }) => {
         e.preventDefault();
 
         const upd = {
-            userId:state.user._id,
+            userId: state.user._id,
             name: edit.name,
             from: edit.from,
             phone: edit.phone,
             profilePicture: imgBase64profile,
             coverPicture: imgBase64cover
         }
-        try{
-            await axios.put(`/users/${state.user._id}`,upd);
+        try {
+            await axios.put(`/users/${state.user._id}`, upd);
             const me = await axios.get(`/users?userId=${state.user._id}`);
-            dispatch({type:"USER_UPDATE",payload:me.data});
+            dispatch({ type: "USER_UPDATE", payload: me.data });
             window.location.reload();
 
-        }catch(err){
+        } catch (err) {
             console.log(err);
         }
         setShow(false);
-        
+
     }
 
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -78,16 +79,36 @@ const ProfileArea = ({ user }) => {
         <>
             <div className="profileRightTop">
                 <div className="profile-cover">
-                    <img
-                        className="profile-cover-img"
-                        src={(user.coverPhoto === undefined || user.profilePicture === "") ? (PF + 'person/noCover.png') : (PF + user.coverPhoto)}
-                        alt=""
-                    />
-                    <img
-                        className="profile-user-img"
-                        src={(user.profilePicture === undefined || user.profilePicture === "") ? (PF + 'person/noAvatar.png') : (PF + user.profilePicture)}
-                        alt=""
-                    />
+                    {(user.coverPicture === undefined || user.coverPicture === "")
+                        ? (<img
+                            className="profile-cover-img"
+                            src={PF + 'person/noCover.png'}
+                            alt="" />)
+                        : (<Image cloudName="dd8mlpgig" publicId={user.coverPicture}
+                            style={{
+                                'width': '100%',
+                                'height': '250px',
+                                'object-fit': 'cover'
+                            }} />)
+                    }
+                    {(user.profilePicture === undefined || user.profilePicture === "")
+                        ? (<img
+                            className="profile-cover-img"
+                            src={PF + 'person/noAvatar.png'}
+                            alt="" />)
+                        : (<Image cloudName="dd8mlpgig" publicId={user.profilePicture} style={{
+                            'width': '150px',
+                            'height': '150px',
+                            'border-radius': '50%',
+                            'object-fit': 'cover',
+                            'position': 'absolute',
+                            'left': '0',
+                            'right': '0',
+                            'margin': 'auto',
+                            'top': '150px',
+                            'border': '3px solid white',
+                        }} />)
+                    }
                 </div>
                 <div className="profile-info">
                     <h4 className="profile-info-name">{user.name}</h4>
