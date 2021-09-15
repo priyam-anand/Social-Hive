@@ -58,10 +58,9 @@ const Rightbar = ({ user, isProfile }) => {
                 <div className="birthday-container">
                     <img className="birthday-img" src="assets/gift.png" alt="" />
                     <span className="birthday-text">
-                        <b>Pola Foster</b> and <b>3 other friends</b> have a birhday today.
+                        <b>Priyam Anand</b> and <b>3 other friends</b> have a birhday today.
                     </span>
                 </div>
-                <img className="rightbarAd" src="assets/ad.png" alt="" />
                 <h4 className="rightbar-title">Online Friends</h4>
                 <ul className="rightbarFriendList">
                     {friends.map((friend) => {

@@ -8,7 +8,7 @@ const userRoute = require('./routes/users');
 const authRoute = require('./routes/auth');
 const postRoute = require('./routes/posts');
 const cookieParser = require('cookie-parser');
-
+const http=require("http").createServer(app);
 
 dotenv.config({path:'./config.env'})
 const PORT = process.env.PORT;
@@ -26,6 +26,6 @@ app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/posts",postRoute);
 
-app.listen(PORT, ()=>{
+http.listen(PORT, ()=>{
     console.log(`server running at port ${PORT}`)
 })
