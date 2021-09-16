@@ -139,7 +139,7 @@ const ProfileArea = ({ user }) => {
                                 <label htmlFor='name' className="lbl">
                                     Name:
                                 </label>
-                                <input type="text" name='name' className="inp-type" value={edit.name} onChange={e => setEdit({ ...edit, name: e.target.value })} readOnly/>
+                                <input type="text" name='name' className="inp-type" value={edit.name} onChange={e => setEdit({ ...edit, name: e.target.value })} readOnly />
 
                             </div>
                             <div className="input-holder">
@@ -154,8 +154,11 @@ const ProfileArea = ({ user }) => {
                                 <label htmlFor='name' className="lbl">
                                     Phone:
                                 </label>
-                                <input type="number" className="inp-type" name='phone' value={edit.phone}
-                                    onChange={e => setEdit({ ...edit, phone: e.target.value })} />
+                                <input type="text" className="inp-type" name='phone' value={edit.phone}
+                                    onChange={e => setEdit({ ...edit, phone: e.target.value })}
+                                    required
+                                    maxLength="10" 
+                                />
 
                             </div>
                             <div className="input-holder">
@@ -170,7 +173,6 @@ const ProfileArea = ({ user }) => {
                                     Change Cover Picture
                                 </label>
                                 <input type='file' className="file-type" id='file' accept='.png,.jpeg,jpg' onChange={handleCover} />
-
                             </div>
                             <button className="btn btn-primary my-3" type="submit">Submit</button>
                         </form>
