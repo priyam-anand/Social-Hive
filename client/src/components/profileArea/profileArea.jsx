@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './profileArea.css';
 import { userContext } from '../../App';
 import { useContext } from 'react';
@@ -134,30 +134,45 @@ const ProfileArea = ({ user }) => {
                     </Modal.Header>
 
                     <Modal.Body>
-                        <form onSubmit={handleUpdate}>
-                            <label htmlFor='file'>
-                                Edit Profile Picture :
-                                <input type='file' id='file' accept='.png,.jpeg,jpg' onChange={handleProfile} />
-                            </label>
-                            <label htmlFor='file'>
-                                Edit Cover Picture :
-                                <input type='file' id='file' accept='.png,.jpeg,jpg' onChange={handleCover} />
-                            </label>
-                            <label htmlFor='name'>
-                                Name:
-                                <input type="text" name='name' value={edit.name} onChange={e => setEdit({ ...edit, name: e.target.value })} />
-                            </label>
-                            <label htmlFor='name'>
-                                From:
-                                <input type="text" name='from' value={edit.from}
+                        <form onSubmit={handleUpdate} className="input-form">
+                            <div className="input-holder">
+                                <label htmlFor='name' className="lbl">
+                                    Name:
+                                </label>
+                                <input type="text" name='name' className="inp-type" value={edit.name} onChange={e => setEdit({ ...edit, name: e.target.value })} readOnly/>
+
+                            </div>
+                            <div className="input-holder">
+                                <label htmlFor='name' className="lbl">
+                                    From:
+                                </label>
+                                <input type="text" name='from' className="inp-type" value={edit.from}
                                     onChange={e => setEdit({ ...edit, from: e.target.value })} />
-                            </label>
-                            <label htmlFor='name'>
-                                Phone:
-                                <input type="number" name='phone' value={edit.phone}
+
+                            </div>
+                            <div className="input-holder">
+                                <label htmlFor='name' className="lbl">
+                                    Phone:
+                                </label>
+                                <input type="number" className="inp-type" name='phone' value={edit.phone}
                                     onChange={e => setEdit({ ...edit, phone: e.target.value })} />
-                            </label>
-                            <button className="btn btn-primary" type="submit">Submit</button>
+
+                            </div>
+                            <div className="input-holder">
+                                <label htmlFor='file' className="lbl btn btn-outline-primary mx-5">
+                                    Change Profile Picture
+                                </label>
+                                <input type='file' className="file-type" id='file' accept='.png,.jpeg,jpg' onChange={handleProfile} />
+
+                            </div>
+                            <div className="input-holder">
+                                <label htmlFor='file' className="lbl btn btn-outline-primary mx-5">
+                                    Change Cover Picture
+                                </label>
+                                <input type='file' className="file-type" id='file' accept='.png,.jpeg,jpg' onChange={handleCover} />
+
+                            </div>
+                            <button className="btn btn-primary my-3" type="submit">Submit</button>
                         </form>
                     </Modal.Body>
                 </Modal>

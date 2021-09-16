@@ -42,3 +42,44 @@
     top: 425px;
     right: 200px;
 }
+
+.input-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(240, 240, 240);
+    box-shadow: 5px 5px 5px rgb(211, 211, 211);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.input-holder{
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+.lbl{
+    margin: 0rem 2rem;
+    cursor: pointer;
+}
+
+.inp-type{
+    border: none;
+    border-bottom: 3px solid rgb(177, 177, 177);
+    background-color: rgb(240, 240, 240);
+    text-align: center;
+    width: 30%;
+    text-align: center;
+}
+
+.inp-type:focus{
+    outline: none;
+    border: 2px solid rgb(104, 104, 104);
+    transition: 0.1s ease-in;
+    border-radius: 5px;
+}
+
+.file-type{
+    display: none;
+}
