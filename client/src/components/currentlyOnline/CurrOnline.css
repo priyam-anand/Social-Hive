@@ -1,0 +1,15 @@
+.online-chat-wrapper{
+    width: 100%;
+    height: 10%;
+    margin-top: 1.5rem;
+}
+.online-chat-profile-img{
+    height: 50px;
+    width: 50px;
+    border-radius: 25%;
+    margin-left: 1rem;
+}
+
+.online-chat-friend-name{
+    padding: .5rem 1rem;
+}

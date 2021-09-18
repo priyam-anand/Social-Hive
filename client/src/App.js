@@ -8,6 +8,7 @@ import Register from './pages/register/register';
 import { reducer, initialState } from './Reducer/useReducer';
 import Loading from './components/loading/loading';
 import axios from 'axios';
+import ChatPage from './pages/Chat-page/chat-page';
 export const userContext = createContext();
 
 const App = () => {
@@ -43,6 +44,9 @@ const App = () => {
           <Switch>
             <Route exact path='/'>
               {isUser() ? <Home /> : <Login />}
+            </Route>
+            <Route path='/chat-page'>
+              {!isUser() ? <Redirect to='/' /> : <ChatPage />}
             </Route>
             <Route path='/profile/:username'>
               {!isUser() ? <Redirect to='/' /> : <Profile />}
