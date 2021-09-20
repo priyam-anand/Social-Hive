@@ -1,14 +1,20 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import './Messages.css';
-const Messages = ({user}) => {
+import { userContext } from '../../App';
+import { format } from 'timeago.js';
+
+const Messages = ({message}) => {
+
+    const {state}=useContext(userContext);
+
     return (
         <div>
-            <div className={user?"msg-wrapper-user":"msg-wrapper"}>
-                <p className={user?"chat-msg-user":"chat-msg"}>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore officia asperiores ex dolorum nobis amet, dicta omnis laborum nesciunt culpa consequuntur, nam quibusdam?
+            <div className={message.senderId===state.user._id?"msg-wrapper-user":"msg-wrapper"}>
+                <p className={message.senderId===state.user._id?"chat-msg-user":"chat-msg"}>
+                    {message.msg}
                 </p>
                 <span className="time-ago">
-                    1 hours ago
+                {format(message.createdAt)}
                 </span>
             </div>
         </div>

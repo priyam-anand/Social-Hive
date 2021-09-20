@@ -76,8 +76,8 @@ const Navbar = () => {
                         : <Image cloudName="dd8mlpgig" publicId={state.user.profilePicture} style={{
                             'width': '40px',
                             'height': '40px',
-                            'border-radius': '50%',
-                            'object-fit': 'cover',
+                            'borderRadius': '50%',
+                            'objectFit': 'cover',
                             'cursor': 'pointer'
                         }} />
                     }
