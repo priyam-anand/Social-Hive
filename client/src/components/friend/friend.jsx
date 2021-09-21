@@ -10,7 +10,7 @@ const Friends = ({conversation}) => {
     useEffect(()=>{
         const getUser = async () =>{
             try{
-                if(state.user._id!=conversation.members[0])
+                if(state.user._id!==conversation.members[0])
                 {
                     const res=await axios.get(`/users?userId=${conversation.members[0]}`)
                     setUser(res.data);
