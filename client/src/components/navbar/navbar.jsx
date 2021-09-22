@@ -43,32 +43,18 @@ const Navbar = () => {
             </div>
             <div className="navbar-Right">
                 <div className="navbar-Links">
-                    <div className="navbar-Link">
+                    <Link to='/' className="navbar-Link">
                         <HomeIcon fontSize="small" />
                         <span className="mx-1">
-                            Homepage
+                            Home
                         </span>
-                    </div>
-                    <div className="navbar-Link">
+                    </Link>
+                    <Link to="/chat-page" className="navbar-Link">
                         <TimelineIcon fontSize="small" />
                         <span className="mx-2">
-                            Timeline
+                            Chat with Friends
                         </span>
-                    </div>
-                </div>
-                <div className="navbar-Icons">
-                    <div className="navbar-Icon-Item">
-                        <Person style={{ fontSize: 30 }} />
-                        <span className="navbar-Icon-Badge">1</span>
-                    </div>
-                    <div className="navbar-Icon-Item">
-                        <Chat style={{ fontSize: 30 }} />
-                        <span className="navbar-Icon-Badge">2</span>
-                    </div>
-                    <div className="navbar-Icon-Item">
-                        <Notifications style={{ fontSize: 30 }} />
-                        <span className="navbar-Icon-Badge">1</span>
-                    </div>
+                    </Link>
                 </div>
                 <div className="profile-picture">
                     {(state.user.profilePicture === undefined || state.user.profilePicture === "")

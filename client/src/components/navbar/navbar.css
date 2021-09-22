@@ -57,18 +57,28 @@
 }
 
 .navbar-Links{
+    width: 70%;
     display: flex;
     flex-direction: row;
+    justify-content:space-evenly;
 }
 
 .navbar-Link {
-    margin-right: 2rem;
     font-size: 16px;
+    padding: 7px 15px;
     font-weight: bold;
     cursor: pointer;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    color: white;
+    text-decoration: none;
+    border-radius: 15px;
+}
+
+.navbar-Link:hover{
+    color: white;
+    background-color: #20796d;
 }
 
 .navbar-Icons {

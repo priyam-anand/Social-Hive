@@ -60,6 +60,7 @@ const Rightbar = ({ user, isProfile }) => {
                         <b>Priyam Anand</b> and <b>3 other friends</b> have a birhday today.
                     </span>
                 </div>
+                
                 <h4 className="rightbar-title">Online Friends</h4>
                 <ul className="rightbarFriendList">
                     {friends.map((friend) => {

@@ -58,9 +58,9 @@ const removeUser = (socketId) => {
 io.on("connection",(socket) => {
 
     // when a new user connects, add it to the current uses list
-    console.log("a user has connected with socketID = "+socket.id);
     socket.on("addUser",userId=>{
         addUser(userId,socket.id);
+        console.log(users);
         io.emit("onlineUsers",users);
     })
 
@@ -75,7 +75,6 @@ io.on("connection",(socket) => {
 
     // when the current user disconnects
     socket.on("disconnect",()=>{
-        console.log("a user disconnected");
         removeUser(socket.id);
         io.emit("onlineUsers",users);
     })

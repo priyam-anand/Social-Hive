@@ -74,7 +74,7 @@ const ChatPage = () => {
 
     // changing the messages array
     useEffect(()=>{
-        if(arrived!=null)
+        if(arrived!=null && otherUser)
         {   
             if(otherUser._id === arrived.senderId)
                 setMessages([...messages,arrived]);
@@ -85,6 +85,7 @@ const ChatPage = () => {
     useEffect(()=>{
         socket.current.emit("addUser",state.user._id);
         socket.current.on("onlineUsers",users=>{
+            console.log(users);
         })
     },[state]);
 
@@ -100,7 +101,6 @@ const ChatPage = () => {
         }
         getConvos();
     }, [state.user]);
-
     // get the messages on the load of the second user
     useEffect(() => {
         const getMessages = async () => {
