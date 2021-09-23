@@ -31,5 +31,25 @@ router.get('/:userId', async (req, res) => {
     }
 })
 
-
+// search for conversation, if any convesration there, return it, else adde a new conversation
+router.get("/:userId1/:userId2",async (req,res)=>{
+    try{
+        const data = await Conversation.find({
+            members:{$all:[req.params.userId1,req.params.userId2]}
+        });
+        if(data.length>0)
+            res.status(200).json(data);
+        else
+        {
+            // make a new conversation with member ids userId1 and userId2
+            const convo = new Conversation({
+                members:[req.params.userId1,req.params.userId2]
+            });
+            const resp = await convo.save();
+            res.status(200).json(resp);
+        }
+    }catch(err){
+        res.status(500).json(err);
+    }
+})
 module.exports = router;

@@ -113,3 +113,21 @@
     padding-bottom: 0px;
     border-bottom: 2px solid grey;
 }
+
+.prev-convos{
+    margin-top: 1rem;
+    padding: 1rem 0rem;
+    padding-bottom: 0.2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-bottom: 2px solid black;
+}
+
+.all-friends{
+    margin-top: 0.2rem;
+    padding: 1rem 0.4rem;
+    padding-bottom: 0.2rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-bottom: 2px solid black;
+}

@@ -18,10 +18,12 @@ const ChatPage = () => {
     const [otherUser, setOtherUser] = useState();
     const [mess, setMess] = useState("");
     const [arrived,setArrived]=useState(null);  
+    const [onlineUsers,setOnlineUsers]=useState([]);
     const scrollRef = useRef();
     const socket = useRef();
 
     const getUser = async (cv) => {
+        console.log(cv);
         try {
             if (state.user._id !== cv.members[0]) {
                 const res = await axios.get(`/users?userId=${cv.members[0]}`)
@@ -34,6 +36,19 @@ const ChatPage = () => {
         } catch (err) {
             console.log(err);
         }
+    }
+
+    const handleOnlineClick = async (usr) =>{
+
+        const userId1=usr;
+        const userId2=state.user._id;
+
+        console.log(userId1+" "+userId2);
+
+        const res = await axios.get(`/conversation/${userId1}/${userId2}`);
+        getUser(res.data[0]);
+        setCurrChat(res.data[0]);
+        console.log(res.data);
     }
 
     const addMessage = async (e) => {
@@ -59,7 +74,6 @@ const ChatPage = () => {
         }
         setMess("");
     }
-
     // updating the socket when it connects
     useEffect(()=>{
         socket.current=io("http://localhost:8000");
@@ -84,8 +98,8 @@ const ChatPage = () => {
     // when user connects for the first time
     useEffect(()=>{
         socket.current.emit("addUser",state.user._id);
-        socket.current.on("onlineUsers",users=>{
-            console.log(users);
+        socket.current.on("onlineUsers",ousers=>{
+            setOnlineUsers(ousers);
         })
     },[state]);
 
@@ -127,7 +141,9 @@ const ChatPage = () => {
             <div className="chat-body">
                 <div className="friends">
                     <div className="friend-wrapper">
-                        <input type="text" placeholder="Search for your friends here" className="serch-input" />
+                        <div className="prev-convos">
+                            Your previous Conversations
+                        </div>
                         {convos.map((convo, idx) => {
                             return (
                                 <div onClick={() => {
@@ -138,6 +154,17 @@ const ChatPage = () => {
                                 </div>
                             )
                         })}
+                        <div className="all-friends">
+                            Your friends
+                        </div>
+                        {state.user.following.map((frnd,index)=>{
+                            return(
+                                <div key={index} onClick={()=>handleOnlineClick(frnd)}>
+                                    <Friends userId={frnd}/>
+                                </div>
+                            )
+                        })}
+                        {/* map all the friends */}
                     </div>
                 </div>
                 <div className="chat-space">
@@ -179,8 +206,20 @@ const ChatPage = () => {
                         <span className="online-friend-list">
                             Online Friends
                         </span>
-                        <CurrOnline />
-                        <CurrOnline /><CurrOnline />
+                        {
+                            onlineUsers.map((online,index)=>{
+                                if(online.userId===state.user._id || !state.user.following.includes(online.userId))
+                                    return(
+                                        <div></div>
+                                    );
+                                return (
+                                    // on this button click , get the chat of state.user and clicked user
+                                <div key={index} onClick={()=>handleOnlineClick(online.userId)}>
+                                    <CurrOnline userId={online.userId}/>
+                                </div>
+                                )
+                            })
+                        }
                     </div>
                 </div>
             </div>
