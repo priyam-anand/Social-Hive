@@ -7,6 +7,8 @@ import { userContext } from '../../App';
 
 const Rightbar = ({ user, isProfile }) => {
 
+
+    console.log(user._id);
     const [friends, setFriends] = useState([]);
     const { state, dispatch } = useContext(userContext);
     const [isFollowing, setIsFollowing] = useState(true);
@@ -26,8 +28,9 @@ const Rightbar = ({ user, isProfile }) => {
                 console.log(err);
             }
         }
-        getUserFriends();
-    }, [user]);
+        if(user._id)
+            getUserFriends();
+    }, [user._id]);
 
     const handleClick = async (e) => {
         e.preventDefault();

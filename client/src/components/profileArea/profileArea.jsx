@@ -18,7 +18,6 @@ const ProfileArea = ({ user }) => {
     const [cover, setCover] = useState(null);
     const [imgBase64cover, setImgBase64cover] = useState();
 
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -74,16 +73,31 @@ const ProfileArea = ({ user }) => {
 
     }
 
+    const style = {
+        'width': '150px',
+        'height': '150px',
+        'borderRadius': '50%',
+        'objectFit': 'cover',
+        'position': 'absolute',
+        'left': '0',
+        'right': '0',
+        'margin': 'auto',
+        'top': '150px',
+        'border': '3px solid white',
+    }
+
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     return (
         <>
             <div className="profileRightTop">
                 <div className="profile-cover">
                     {(user.coverPicture === undefined || user.coverPicture === "")
-                        ? (<img
+                        ? (<div><img
                             className="profile-cover-img"
                             src={PF + 'person/noCover.png'}
-                            alt="" />)
+                            alt="" />
+                        </div>
+                        )
                         : (<Image cloudName="dd8mlpgig" publicId={user.coverPicture}
                             style={{
                                 'width': '100%',
@@ -93,21 +107,10 @@ const ProfileArea = ({ user }) => {
                     }
                     {(user.profilePicture === undefined || user.profilePicture === "")
                         ? (<img
-                            className="profile-cover-img"
+                            style={style}
                             src={PF + 'person/noAvatar.png'}
                             alt="" />)
-                        : (<Image cloudName="dd8mlpgig" publicId={user.profilePicture} style={{
-                            'width': '150px',
-                            'height': '150px',
-                            'border-radius': '50%',
-                            'object-fit': 'cover',
-                            'position': 'absolute',
-                            'left': '0',
-                            'right': '0',
-                            'margin': 'auto',
-                            'top': '150px',
-                            'border': '3px solid white',
-                        }} />)
+                        : (<Image cloudName="dd8mlpgig" publicId={user.profilePicture} style={style} />)
                     }
                 </div>
                 <div className="profile-info">
@@ -157,7 +160,7 @@ const ProfileArea = ({ user }) => {
                                 <input type="text" className="inp-type" name='phone' value={edit.phone}
                                     onChange={e => setEdit({ ...edit, phone: e.target.value })}
                                     required
-                                    maxLength="10" 
+                                    maxLength="10"
                                 />
 
                             </div>

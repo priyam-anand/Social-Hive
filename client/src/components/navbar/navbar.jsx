@@ -1,6 +1,6 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import "./navbar.css";
-import { Search, Person, Chat, Notifications } from "@material-ui/icons";
+import { Search} from "@material-ui/icons";
 import HomeIcon from '@material-ui/icons/Home';
 import TimelineIcon from '@material-ui/icons/Timeline';
 import { Link } from 'react-router-dom';
@@ -14,6 +14,20 @@ const Navbar = () => {
     const { state, dispatch } = useContext(userContext);
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
     const history = useHistory();
+    const [search, setSearch] = useState("");
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        try {
+            const res = await axios.get(`/users?username=${search}`);
+            console.log(res.data);
+            history.push(`/profile/${res.data.name}`);
+        } catch (err) {
+            window.alert("No such user Found");
+        }
+
+    }
 
     const logout = async () => {
         try {
@@ -33,13 +47,17 @@ const Navbar = () => {
                 </Link>
             </div>
             <div className="navbar-Center">
-                <div className="searchbar">
-                    <Search className="search-Icon" />
+                <form className="searchbar" onSubmit={handleSubmit}>
                     <input
                         placeholder="Search for friend, post or video"
-                        className="searchInput"
+                        className="searchInput" value={search}
+                        onChange={e => setSearch(e.target.value)}
+                        required
                     />
-                </div>
+                    <button type="submit" className="search-btn">
+                        <Search className="search-Icon" />Search
+                    </button>
+                </form>
             </div>
             <div className="navbar-Right">
                 <div className="navbar-Links">

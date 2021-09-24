@@ -33,7 +33,6 @@ const Feed = ({username}) => {
         else
             getData2();
     },[username,state.user]);
-    console.log(isLoading);
     return (
         <>
             <div className="feed">

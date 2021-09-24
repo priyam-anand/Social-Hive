@@ -32,16 +32,28 @@
     border-radius: 15px;
     display: flex;
     align-items: center;
+    justify-content:space-evenly;
 }
 
 .search-Icon {
     font-size: 20px !important;
-    margin-left: 10px;
 }
 
 .searchInput {
     border: none;
     width: 70%;
+    margin-left: 10px;
+}
+
+.search-btn{
+    border: none;
+    background-color: white;
+    padding: 0.3rem;
+    border-radius: 10px;
+}
+
+.search-btn:hover{
+    background-color: rgb(228, 228, 228);
 }
 
 .searchInput:focus {
