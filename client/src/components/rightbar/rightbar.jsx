@@ -7,8 +7,6 @@ import { userContext } from '../../App';
 
 const Rightbar = ({ user, isProfile }) => {
 
-
-    console.log(user._id);
     const [friends, setFriends] = useState([]);
     const { state, dispatch } = useContext(userContext);
     const [isFollowing, setIsFollowing] = useState(true);
@@ -84,19 +82,19 @@ const Rightbar = ({ user, isProfile }) => {
                 <div className="rightbar-info">
                     <div className="rightbar-info-item">
                         <span className="rightbar-info-key">Name:</span>
-                        <span className="rightbar-info-value">{(user.name === undefined) ? `Not added by the user` : user.name}</span>
+                        <span className="rightbar-info-value">{(user.name === undefined || user.name===null) ? `Not added by the user` : user.name}</span>
                     </div>
                     <div className="rightbar-info-item">
                         <span className="rightbar-info-key">Email:</span>
-                        <span className="rightbar-info-value">{(user.email === undefined) ? `Not added by the user` : user.email}</span>
+                        <span className="rightbar-info-value">{(user.email === undefined || user.email===null) ? `Not added by the user` : user.email}</span>
                     </div>
                     <div className="rightbar-info-item">
                         <span className="rightbar-info-key">From:</span>
-                        <span className="rightbar-info-value">{(user.from === undefined) ? `N/A` : user.from}</span>
+                        <span className="rightbar-info-value">{(user.from === undefined || user.from===null) ? `N/A` : user.from}</span>
                     </div>
                     <div className="rightbar-info-item">
                         <span className="rightbar-info-key">Phone No:</span>
-                        <span className="rightbar-info-value">{(user.phone === undefined) ? `N/A` : user.phone}</span>
+                        <span className="rightbar-info-value">{(user.phone === undefined || user.phone===null) ? `N/A` : user.phone}</span>
                     </div>
                 </div>
 

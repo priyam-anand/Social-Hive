@@ -31,7 +31,6 @@ const Friends = ({ conversation, userId }) => {
             }
         }
         if (userId) {
-            // do direct thing
             getUser1();
         }
         else {
@@ -39,7 +38,7 @@ const Friends = ({ conversation, userId }) => {
         }
 
 
-    }, [conversation, state]);
+    }, [conversation, state, userId]);
 
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 

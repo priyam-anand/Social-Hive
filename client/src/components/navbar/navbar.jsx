@@ -1,8 +1,7 @@
 import React, { useContext, useState } from 'react'
 import "./navbar.css";
-import { Search} from "@material-ui/icons";
+import { Search,Chat} from "@material-ui/icons";
 import HomeIcon from '@material-ui/icons/Home';
-import TimelineIcon from '@material-ui/icons/Timeline';
 import { Link } from 'react-router-dom';
 import { userContext } from '../../App';
 import { useHistory } from 'react-router'
@@ -67,7 +66,7 @@ const Navbar = () => {
                         </span>
                     </Link>
                     <Link to="/chat-page" className="navbar-Link">
-                        <TimelineIcon fontSize="small" />
+                        <Chat fontSize="small" />
                         <span className="mx-2">
                             Chat with Friends
                         </span>

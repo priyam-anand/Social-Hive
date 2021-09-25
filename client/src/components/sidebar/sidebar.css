@@ -31,7 +31,16 @@
 .sidebar-list-item {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    padding: 0.6rem 1.2rem;
+    margin-bottom: 0.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+    color: black;
+}
+
+.sidebar-list-item:hover{
+    background-color: rgb(212, 212, 212);
 }
 
 .sidebar-icon {

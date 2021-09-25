@@ -90,7 +90,7 @@ const ChatPage = () => {
     useEffect(() => {
         if (arrived != null && otherUser) {
             if (otherUser._id === arrived.senderId)
-                setMessages([...messages, arrived]);
+                setMessages(m=>[...m, arrived]);
         }
     }, [arrived, otherUser])
 

@@ -159,7 +159,6 @@ const ProfileArea = ({ user }) => {
                                 </label>
                                 <input type="text" className="inp-type" name='phone' value={edit.phone}
                                     onChange={e => setEdit({ ...edit, phone: e.target.value })}
-                                    required
                                     maxLength="10"
                                 />
 
