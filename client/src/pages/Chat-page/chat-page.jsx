@@ -17,8 +17,8 @@ const ChatPage = () => {
     const [messages, setMessages] = useState([]);
     const [otherUser, setOtherUser] = useState();
     const [mess, setMess] = useState("");
-    const [arrived,setArrived]=useState(null);  
-    const [onlineUsers,setOnlineUsers]=useState([]);
+    const [arrived, setArrived] = useState(null);
+    const [onlineUsers, setOnlineUsers] = useState([]);
     const scrollRef = useRef();
     const socket = useRef();
 
@@ -38,12 +38,12 @@ const ChatPage = () => {
         }
     }
 
-    const handleOnlineClick = async (usr) =>{
+    const handleOnlineClick = async (usr) => {
 
-        const userId1=usr;
-        const userId2=state.user._id;
+        const userId1 = usr;
+        const userId2 = state.user._id;
 
-        console.log(userId1+" "+userId2);
+        console.log(userId1 + " " + userId2);
 
         const res = await axios.get(`/conversation/${userId1}/${userId2}`);
         getUser(res.data[0]);
@@ -60,10 +60,10 @@ const ChatPage = () => {
             msg: mess
         }
 
-        socket.current.emit("sendMessage",{
-            senderId:state.user._id,
-            receiverId:otherUser._id,
-            text:mess
+        socket.current.emit("sendMessage", {
+            senderId: state.user._id,
+            receiverId: otherUser._id,
+            text: mess
         })
 
         try {
@@ -75,33 +75,32 @@ const ChatPage = () => {
         setMess("");
     }
     // updating the socket when it connects
-    useEffect(()=>{
-        socket.current=io("http://localhost:8000");
-        socket.current.on("getMessage",({senderId,text})=>{
+    useEffect(() => {
+        socket.current = io("http://localhost:8000");
+        socket.current.on("getMessage", ({ senderId, text }) => {
             setArrived({
-                "senderId":senderId,
-                "msg":text,
+                "senderId": senderId,
+                "msg": text,
                 createadAt: Date.now()
             })
         })
-    },[]);
+    }, []);
 
     // changing the messages array
-    useEffect(()=>{
-        if(arrived!=null && otherUser)
-        {   
-            if(otherUser._id === arrived.senderId)
-                setMessages([...messages,arrived]);
+    useEffect(() => {
+        if (arrived != null && otherUser) {
+            if (otherUser._id === arrived.senderId)
+                setMessages([...messages, arrived]);
         }
-    },[arrived,otherUser])
+    }, [arrived, otherUser])
 
     // when user connects for the first time
-    useEffect(()=>{
-        socket.current.emit("addUser",state.user._id);
-        socket.current.on("onlineUsers",ousers=>{
+    useEffect(() => {
+        socket.current.emit("addUser", state.user._id);
+        socket.current.on("onlineUsers", ousers => {
             setOnlineUsers(ousers);
         })
-    },[state]);
+    }, [state]);
 
     // get all the conversations of the current user
     useEffect(() => {
@@ -144,27 +143,30 @@ const ChatPage = () => {
                         <div className="prev-convos">
                             Your previous Conversations
                         </div>
-                        {convos.map((convo, idx) => {
-                            return (
-                                <div onClick={() => {
-                                    setCurrChat(convo);
-                                    getUser(convo);
-                                }} key={idx}>
-                                    <Friends conversation={convo} />
-                                </div>
-                            )
-                        })}
+                        <div className="scroll-container">
+                            {convos.map((convo, idx) => {
+                                return (
+                                    <div onClick={() => {
+                                        setCurrChat(convo);
+                                        getUser(convo);
+                                    }} key={idx}>
+                                        <Friends conversation={convo} />
+                                    </div>
+                                )
+                            })}
+                        </div>
                         <div className="all-friends">
                             Your friends
                         </div>
-                        {state.user.following.map((frnd,index)=>{
-                            return(
-                                <div key={index} onClick={()=>handleOnlineClick(frnd)}>
-                                    <Friends userId={frnd}/>
-                                </div>
-                            )
-                        })}
-                        {/* map all the friends */}
+                        <div className="scroll-container">
+                            {state.user.following.map((frnd, index) => {
+                                return (
+                                    <div key={index} onClick={() => handleOnlineClick(frnd)}>
+                                        <Friends userId={frnd} />
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </div>
                 </div>
                 <div className="chat-space">
@@ -206,20 +208,19 @@ const ChatPage = () => {
                         <span className="online-friend-list">
                             Online Friends
                         </span>
-                        {
-                            onlineUsers.map((online,index)=>{
-                                if(online.userId===state.user._id || !state.user.following.includes(online.userId))
-                                    return(
+                        <div className="scroll-container">
+                            {onlineUsers.map((online, index) => {
+                                if (online.userId === state.user._id || !state.user.following.includes(online.userId))
+                                    return (
                                         <div></div>
                                     );
                                 return (
-                                    // on this button click , get the chat of state.user and clicked user
-                                <div key={index} onClick={()=>handleOnlineClick(online.userId)}>
-                                    <CurrOnline userId={online.userId}/>
-                                </div>
+                                    <div key={index} onClick={() => handleOnlineClick(online.userId)}>
+                                        <CurrOnline userId={online.userId} />
+                                    </div>
                                 )
-                            })
-                        }
+                            })}
+                        </div>
                     </div>
                 </div>
             </div>

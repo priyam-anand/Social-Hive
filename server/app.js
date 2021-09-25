@@ -17,7 +17,6 @@ const io = require("socket.io")(http, {
     }
 })
 
-
 dotenv.config({ path: './config.env' })
 const PORT = process.env.PORT;
 
@@ -60,7 +59,6 @@ io.on("connection", (socket) => {
     // when a new user connects, add it to the current uses list
     socket.on("addUser", userId => {
         addUser(userId, socket.id);
-        console.log(users);
         io.emit("onlineUsers", users);
     })
 

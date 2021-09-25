@@ -18,13 +18,12 @@ const Navbar = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        
         try {
             const res = await axios.get(`/users?username=${search}`);
-            console.log(res.data);
-            history.push(`/profile/${res.data.name}`);
+            history.push(`/profile/${res.data.name}`);setSearch("");
         } catch (err) {
-            window.alert("No such user Found");
+            window.alert("No such user Found");setSearch("");
         }
 
     }
