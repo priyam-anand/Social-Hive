@@ -45,13 +45,13 @@ const ProfileArea = ({ user }) => {
         const reader = new FileReader();
         reader.readAsDataURL(fil);
         reader.onloadend = () => {
-            setImgBase64cover(reader.result)
+            setImgBase64cover(reader.result);
         }
     }
 
     const handleUpdate = async (e) => {
         e.preventDefault();
-
+        
         const upd = {
             userId: state.user._id,
             name: edit.name,
@@ -171,10 +171,10 @@ const ProfileArea = ({ user }) => {
 
                             </div>
                             <div className="input-holder">
-                                <label htmlFor='file' className="lbl btn btn-outline-primary mx-5">
+                                <label htmlFor='cover-id' className="lbl btn btn-outline-primary mx-5">
                                     Change Cover Picture
                                 </label>
-                                <input type='file' className="file-type" id='file' accept='.png,.jpeg,jpg' onChange={handleCover} />
+                                <input type='file' className="file-type"  id="cover-id" accept='.png,.jpeg,jpg' onChange={handleCover} />
                             </div>
                             <button className="btn btn-primary my-3" type="submit">Submit</button>
                         </form>
