@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import './CurrOnline.css';
-
+import { Image } from 'cloudinary-react';
 const CurrOnline = ({ userId }) => {
 
     const [user, setUser] = useState(null);
@@ -14,10 +14,22 @@ const CurrOnline = ({ userId }) => {
         getUser();
     }, [userId]);
 
+    const PF = process.env.REACT_APP_PUBLIC_FOLDER;
+
+    const style = {
+        "height": "50px",
+        "width": "50px",
+        "borderRadius": "50%",
+        "marginLeft": "1rem"
+    }
+
     return (
         <div className="online-chat-wrapper">
-            <img src="https://images.unsplash.com/photo-1587502537745-84b86da1204f?ixid=MnwxMjA3fDF8MHxzZWFyY2h8MXx8b2NlYW58ZW58MHx8MHx8&ixlib=rb-1.2.1&w=1000&q=80" alt="" className="online-chat-profile-img" />
-            <span className="online-chat-friend-name">{user != null ? user.name : ""}</span>
+            {user!==null
+            ?<Image cloudName="dd8mlpgig" publicId={user.profilePicture} 
+            style={style}/>
+            :<img src={PF+"./person/noAvatar.png"} alt="" style={style} />}
+            <span className="online-chat-friend-name">{user !== null ? user.name : ""}</span>
         </div>
     )
 }

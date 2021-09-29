@@ -3,6 +3,8 @@ import './friend.css';
 import { userContext } from '../../App';
 import { useContext } from 'react';
 import axios from 'axios';
+import { Image } from 'cloudinary-react';
+
 const Friends = ({ conversation, userId }) => {
 
     const { state } = useContext(userContext);
@@ -40,11 +42,23 @@ const Friends = ({ conversation, userId }) => {
 
     }, [conversation, state, userId]);
 
+    const style = {
+        "height": "50px",
+        "width": "50px",
+        "borderRadius": '50%',
+        "marginLeft": "1rem"
+    }
+
     const PF = process.env.REACT_APP_PUBLIC_FOLDER;
 
     return (
         <div className="friends-wrapper">
-            <img src={PF + "/person/noAvatar.png"} alt="" className="profile-img" />
+            {user!==undefined
+            ?<Image cloudName="dd8mlpgig" publicId={user.profilePicture} 
+            style={style}/>
+            :<img src={PF + "/person/noAvatar.png"} alt="" style={style} />
+            }
+            
             <span className="friend-name">{user !== undefined ? user.name : ""}</span>
         </div>
     )

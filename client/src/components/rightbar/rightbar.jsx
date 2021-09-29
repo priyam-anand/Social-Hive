@@ -4,7 +4,7 @@ import Online from "../online/online";
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { userContext } from '../../App';
-
+import { Image } from 'cloudinary-react';
 const Rightbar = ({ user, isProfile }) => {
 
     const [friends, setFriends] = useState([]);
@@ -50,6 +50,13 @@ const Rightbar = ({ user, isProfile }) => {
             console.log(err);
         }
         setIsFollowing(!isFollowing);
+    }
+
+    const style ={
+        'width': '100px',
+    'height': '100px',
+    'objectFit': 'cover',
+    'borderRadius': '5px'
     }
 
     const HomeRightbar = () => {
@@ -117,13 +124,15 @@ const Rightbar = ({ user, isProfile }) => {
                             <div className="rightbar-following" key={friend._id}>
                                 <Link to={`/profile/${friend.name}`} className='rightbar-following-link'>
 
-                                    <img
-                                        src={(friend.profilePicture === undefined || friend.profilePicture === "") ? (PF + 'person/noAvatar.png') : (PF + friend.profilePicture)}
+                                    {(friend.profilePicture === undefined || friend.profilePicture === "")
+                                    ?<img
+                                        src={(PF + friend.profilePicture)}
                                         alt=""
                                         className="rightbar-following-img"
                                     />
+                                    :<Image cloudName="dd8mlpgig" publicId={friend.profilePicture} 
+                                    style={style}/>}
                                     <span className="rightbar-following-name">{friend.name}</span>
-
                                 </Link>
                             </div>
                         )
